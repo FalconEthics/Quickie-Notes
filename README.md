@@ -45,7 +45,6 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -56,7 +55,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://keeper-app-falconethics.vercel.app/)
 
-A Front-End clone model of Google Keep, one can use it as small note pad (it currently haves no backend so saved notes wiill not stay after refresh)
+A Front-End clone model of Google Keep, one can use it as small note pad (it currently haves no backend so saved notes will not stay after refresh)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -74,25 +73,20 @@ Here are all the components used in the build.
 
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
-
-It's just a front-end clone of tinder so to be fair you can't really do anything......it's not functional yet, i just made it for fun and to demonstrate my front-end skills. <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- ROADMAP -->
 ## Roadmap
 
-I started this project in the very early stage of my web development carrier, I didn't knew any proper javascript or css framwork other then a few libraies like Jquery and bootstrap and i was focusing on learning the frontend part mainly but now when i have all the required skills to build it , i don't have enough time to spent in it so here's the roadmap that i will be following and will be working on to complete this project in near future:
+I did this projectt recently with react and tailwind to get it's frontend ready and as you can see now it's running pretty well but as for now i don't have proper backend knowlegde to make it completely usuable. So, i have temporarity deployed the website on vercel but i am currently learning fullstack web development and i will definitely be restart this project as soon as i complete my bootcamp. So here's the roadmap that i will be following and will be working on to complete this project in near future (feel free to contribute to the project to help me complete the roadmap):
 
 - [x] Base Structure
-- [x] Tinder inspired colour scheme & Front-End
-- [ ] Implement React.js Framework
-- [ ] Replace Vannila css and Bootstrap with Tailwind CSS
-- [ ] Build the Backend
+- [x] Seperate jsx components
+- [x] Styling the frotend (inspired by Google Keep)
+- [x] Deployment
+- [ ] Implement Redux
+- [ ] Replace browser cache with proper sql database
+- [ ] Build the backend
     - [ ] API intergration
-    - [ ] Proper Deployment with payment gateway and user database
+    - [ ] Proper Deployment with payment gateway and user saves
 
 See the [open issues](https://github.com/FalconEthics/keeper-app/issuess) for a full list of proposed features (and known issues).
 
