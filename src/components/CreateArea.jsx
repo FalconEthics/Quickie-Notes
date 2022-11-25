@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { GrAdd } from "react-icons/gr";
 
 function CreateArea(props) {
   const [isExpanded, setExpanded] = useState(false);
