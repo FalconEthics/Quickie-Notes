@@ -1,70 +1,185 @@
-# Getting Started with Create React App
+<a name="readme-top"></a>
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![GNU License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/FalconEthics/keeper-app">
+    <img src="./images/logo.png" alt="Logo" width="150" height="80">
+  </a>
 
-In the project directory, you can run:
+  <h3 align="center">Keeper-app</h3>
 
-### `npm start`
+  <p align="center">
+    - a working frontend clone of Google Keep (G Notes)!
+    <br />
+    <a href="https://github.com/FalconEthics/keeper-app"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://keeper-app-falconethics.vercel.app/">View Demo</a>
+    ·
+    <a href="https://github.com/FalconEthics/keeper-app/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/FalconEthics/keeper-app/issues">Request Feature</a>
+  </p>
+</div>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## <a href="https://keeper-app-falconethics.vercel.app/">Open Site</a>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<!-- ABOUT THE PROJECT -->
+## About The Project
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-### `npm run build`
+[![Product Name Screen Shot][product-screenshot]](https://github.com/FalconEthics/keeper-app)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+A Front-End clone model of Google Keep, one can use it as small note pad (it currently haves no backend so saved notes wiill not stay after refresh)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Built With
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Here are all the components used in the build.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* [![JS][Es6.com]][Es6-url] - JavaScript Framework
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url] - CSS Library
+* [![Git][Git.com]][Git-url] - Deployment
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<!-- USAGE EXAMPLES -->
+## Usage
 
-### Code Splitting
+It's just a front-end clone of tinder so to be fair you can't really do anything......it's not functional yet, i just made it for fun and to demonstrate my front-end skills. <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<!-- ROADMAP -->
+## Roadmap
 
-### Making a Progressive Web App
+I started this project in the very early stage of my web development carrier, I didn't knew any proper javascript or css framwork other then a few libraies like Jquery and bootstrap and i was focusing on learning the frontend part mainly but now when i have all the required skills to build it , i don't have enough time to spent in it so here's the roadmap that i will be following and will be working on to complete this project in near future:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- [x] Base Structure
+- [x] Tinder inspired colour scheme & Front-End
+- [ ] Implement React.js Framework
+- [ ] Replace Vannila css and Bootstrap with Tailwind CSS
+- [ ] Build the Backend
+    - [ ] API intergration
+    - [ ] Proper Deployment with payment gateway and user database
 
-### Advanced Configuration
+See the [open issues](https://github.com/FalconEthics/keeper-app/issuess) for a full list of proposed features (and known issues).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+<!-- CONTRIBUTING -->
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch 
+ ```sh
+git checkout -b feature/AmazingFeature
+```
+3. Commit your Changes 
+```s
+git commit -m Add some AmazingFeature
+```
+4. Push to the Branch 
+```s
+git push origin feature/AmazingFeature
+```
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the GNU License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Soumik Das - [Twitter](https://twitter.com/SoumikD95642409) / [INSTA](https://www.instagram.com/itz.raaj.das/) / [Linkedlin](https://www.linkedin.com/in/soumik-das-profile/)
+
+Project Link: [https://github.com/FalconEthics/keeper-app](https://github.com/FalconEthics/keeper-app)
+Deployed Site: [https://keeper-app-falconethics.vercel.app/](https://keeper-app-falconethics.vercel.app/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Acknowledgments
+
+ -Initially it was my final year project when i was doing my CS50x in computer science engineering from Harvard University (Edx, Online)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/FalconEthics/Keeper-app.svg?style=for-the-badge
+[contributors-url]: https://github.com/FalconEthics/keeper-app/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/FalconEthics/Keeper-app.svg?style=for-the-badge
+[forks-url]: https://github.com/FalconEthics/keeper-app/network/members
+[stars-shield]: https://img.shields.io/github/stars/FalconEthics/Keeper-app.svg?style=for-the-badge
+[stars-url]: https://github.com/FalconEthics/keeper-app/stargazers
+[issues-shield]: https://img.shields.io/github/issues/FalconEthics/Keeper-app.svg?style=for-the-badge
+
+[issues-url]: https://github.com/FalconEthics/keeper-app/issues
+[license-shield]: https://img.shields.io/github/license/FalconEthics/Keeper-app.svg?style=for-the-badge
+
+[license-url]: https://github.com/FalconEthics/keeper-app/blob/main/LICENSE
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+
+[linkedin-url]: https://www.linkedin.com/in/soumik-das-profile/
+
+[product-screenshot]: https://raw.githubusercontent.com/FalconEthics/keeper-appmain/Screenshot.png
+<!-- [product-screenshot2]: https://raw.githubusercontent.com/FalconEthics/keeper-appmain/Trinetro_Drone_2022-Sep-03_04-16-58AM-000_CustomizedView13304029920.png
+[product-screenshot3]: https://raw.githubusercontent.com/FalconEthics/keeper-appmain/Trinetro_Drone_2022-Sep-03_04-18-29AM-000_CustomizedView9151492485.png
+[product-screenshot4]: https://raw.githubusercontent.com/FalconEthics/keeper-appmain/Trinetro_Drone_2022-Sep-03_04-22-00AM-000_CustomizedView12173695879.png
+[product-components]: https://raw.githubusercontent.com/FalconEthics/keeper-appmain/Components.png -->
+
+
+[Bootstrap.com]: https://img.shields.io/badge/tailwind-563D7C?style=for-the-badge&logo=tailwindcss&logoColor=white
+[Bootstrap-url]: https://tailwindcss.com/
+[Es6.com]: https://img.shields.io/badge/react-7BDCB5?style=for-the-badge&logo=react&logoColor=white
+[Es6-url]: https://reactjs.org/
+[Git.com]: https://img.shields.io/badge/vercel-FF6900?style=for-the-badge&logo=vercel&logoColor=white
+[Git-url]: https://vercel.com/
