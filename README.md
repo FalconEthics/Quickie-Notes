@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/FalconEthics/keeper-app">
-    <img src="./images/logo.png" alt="Logo" width="150" height="80">
+    <img src="./logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Keeper-app</h3>
@@ -54,7 +54,7 @@
   </ol>
 </details>
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/FalconEthics/keeper-app)
+[![Product Name Screen Shot][product-screenshot]](https://keeper-app-falconethics.vercel.app/)
 
 A Front-End clone model of Google Keep, one can use it as small note pad (it currently haves no backend so saved notes wiill not stay after refresh)
 
@@ -170,7 +170,7 @@ Deployed Site: [https://keeper-app-falconethics.vercel.app/](https://keeper-app-
 
 [linkedin-url]: https://www.linkedin.com/in/soumik-das-profile/
 
-[product-screenshot]: https://raw.githubusercontent.com/FalconEthics/keeper-appmain/Screenshot.png
+[product-screenshot]: https://raw.githubusercontent.com/FalconEthics/keeper-app/main/Screenshot.png
 <!-- [product-screenshot2]: https://raw.githubusercontent.com/FalconEthics/keeper-appmain/Trinetro_Drone_2022-Sep-03_04-16-58AM-000_CustomizedView13304029920.png
 [product-screenshot3]: https://raw.githubusercontent.com/FalconEthics/keeper-appmain/Trinetro_Drone_2022-Sep-03_04-18-29AM-000_CustomizedView9151492485.png
 [product-screenshot4]: https://raw.githubusercontent.com/FalconEthics/keeper-appmain/Trinetro_Drone_2022-Sep-03_04-22-00AM-000_CustomizedView12173695879.png
