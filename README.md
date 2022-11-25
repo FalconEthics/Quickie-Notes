@@ -144,7 +144,7 @@ Deployed Site: [https://keeper-app-falconethics.vercel.app/](https://keeper-app-
 
 ## Acknowledgments
 
- -Initially it was my final year project when i was doing my CS50x in computer science engineering from Harvard University (Edx, Online)
+ -Initially it was my first year project when i was doing my BSc in computer science engineering from University of London.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
