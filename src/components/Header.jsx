@@ -4,9 +4,8 @@ import { CgNotes } from 'react-icons/cg';
 function Header() {
   return (
     <header>
-      <h1>
-        <CgNotes />
-        Keeper
+      <h1 className="flex text-2xl">
+        <CgNotes className="mr-2"/> Keeper-App
       </h1>
     </header>
   );

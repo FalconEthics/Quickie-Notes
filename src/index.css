@@ -1,3 +1,115 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  * {
+    @apply p-0
+        m-0
+        box-border;
+  }
+  html {
+    @apply font-serif;
+  }
+  body {
+    @apply bg-white
+        bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]
+        py-0 
+        px-[16px];
+  }
+
+  header {
+    @apply bg-[#f5ba13]
+        my-auto
+        mx-[-16px]
+        py-[16px] 
+        px-[32px]
+        shadow-xl;
+  }
+
+  header h1 {
+    @apply text-white
+        font-serif
+        font-extralight;
+  }
+
+  footer {
+    @apply absolute
+        text-center
+        bottom-0
+        w-max
+        h-10;
+  }
+
+  footer p {
+    @apply text-slate-400;
+  }
+  .note {
+    @apply bg-white
+        rounded-[7px]
+        shadow-xl
+        p-[10px]
+        w-[240px]
+        m-[16px]
+        float-left;
+  }
+  .note h1 {
+    @apply text-[1.1em]
+        mb-[6px];
+  }
+  .note p {
+    @apply text-[1.1em]
+        mb-[10px]
+        whitespace-pre-wrap
+        break-words;
+  }
+
+  .note button {
+    @apply relative
+        float-right
+        mr-[10px]
+        text-[#f5ba13]
+        border-0
+        w-[6px]
+        h-[36px]
+        cursor-pointer
+        outline-0;
+  }
+
+  form.create-note {
+    @apply relative
+        w-[480px]
+        mt-[30px] 
+        mr-auto 
+        mb-[20px]
+        ml-auto
+        bg-white
+        p-[15px]
+        rounded-[7px]
+        shadow-2xl;
+  }
+  form.create-note input,
+  form.create-note textarea {
+    @apply w-[100%]
+        border-0
+        p-[4px]
+        outline-0
+        text-[1.2em]
+        /* font-family: inherit; */
+        resize-none;
+  }
+  form.create-note button {
+    @apply absolute
+        right-[18px]
+        bottom-[-18px]
+        bg-[#f5ba13]
+        text-white
+        border-0
+        rounded-[50%]
+        w-[36px]
+        h-[36px]
+        shadow-2xl
+        cursor-pointer
+        outline-0;
+  }
+}
