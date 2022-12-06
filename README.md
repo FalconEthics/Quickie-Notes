@@ -22,7 +22,7 @@
     <a href="https://github.com/FalconEthics/keeper-app"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://keeper-app-falconethics.vercel.app/">View Demo</a>
+    <a href="https://keeper-app-plum.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/FalconEthics/keeper-app/issues">Report Bug</a>
     ·
@@ -30,7 +30,7 @@
   </p>
 </div>
 
-## <a href="https://keeper-app-falconethics.vercel.app/">Open Site</a>
+## <a href="https://keeper-app-plum.vercel.app/">Open Site</a>
 
 
 
@@ -53,7 +53,7 @@
   </ol>
 </details>
 
-[![Product Name Screen Shot][product-screenshot]](https://keeper-app-falconethics.vercel.app/)
+[![Product Name Screen Shot][product-screenshot]](https://keeper-app-plum.vercel.app/)
 
 A Front-End clone model of Google Keep, one can use it as small note pad (it currently haves no backend so saved notes will not stay after refresh)
 
@@ -136,7 +136,7 @@ Distributed under the GNU License. See `LICENSE.txt` for more information.
 Soumik Das - [Twitter](https://twitter.com/SoumikD95642409) / [INSTA](https://www.instagram.com/itz.raaj.das/) / [Linkedlin](https://www.linkedin.com/in/soumik-das-profile/)
 
 Project Link: [https://github.com/FalconEthics/keeper-app](https://github.com/FalconEthics/keeper-app)
-Deployed Site: [https://keeper-app-falconethics.vercel.app/](https://keeper-app-falconethics.vercel.app/)
+Deployed Site: [https://keeper-app-plum.vercel.app/](https://keeper-app-plum.vercel.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
