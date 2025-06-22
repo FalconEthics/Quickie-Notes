@@ -37,6 +37,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e740e38b-31be-4a21-b19a-e21e8de01298"
+      }
+    },
+    "owner": "falconethics"
   }
 }
