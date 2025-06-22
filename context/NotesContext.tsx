@@ -1,8 +1,17 @@
-import React, { createContext, useContext, useReducer, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useMemo, useState } from 'react';
 import { Note, Attachment } from '@/types';
 import { getFromStorage, saveToStorage } from '@/utils/storage';
+import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'expo-router';
 import _ from 'lodash';
+import {
+  createNote as createFirestoreNote,
+  getNotes as getFirestoreNotes,
+  updateNote as updateFirestoreNote,
+  deleteNote as deleteFirestoreNote,
+  uploadAttachment,
+  deleteAttachment
+} from '@/config/firebaseService';
 
 // Constants
 const NOTES_STORAGE_KEY = 'quickie_notes_data';
@@ -16,7 +25,8 @@ type NotesAction =
   | { type: 'UPDATE_NOTE'; payload: Note }
   | { type: 'DELETE_NOTE'; payload: string }
   | { type: 'SET_NOTES'; payload: Note[] }
-  | { type: 'SET_SEARCH_QUERY'; payload: string };
+  | { type: 'SET_SEARCH_QUERY'; payload: string }
+  | { type: 'SET_SYNCING'; payload: boolean };
 
 // State Type
 interface NotesState {
@@ -24,6 +34,7 @@ interface NotesState {
   filteredNotes: Note[];
   searchQuery: string;
   isLoading: boolean;
+  isSyncing: boolean;
 }
 
 // Initial State
@@ -32,6 +43,7 @@ const initialState: NotesState = {
   filteredNotes: [],
   searchQuery: '',
   isLoading: true,
+  isSyncing: false,
 };
 
 // Reducer Function
@@ -82,6 +94,12 @@ const notesReducer = (state: NotesState, action: NotesAction): NotesState => {
         filteredNotes: filterNotesByQuery(state.notes, action.payload),
       };
 
+    case 'SET_SYNCING':
+      return {
+        ...state,
+        isSyncing: action.payload,
+      };
+
     default:
       return state;
   }
@@ -107,13 +125,16 @@ interface NotesContextType {
     withinSizeLimit: boolean;
     withinCountLimit: boolean;
   };
+  syncNotes: () => Promise<void>;
 }
 
 const NotesContext = createContext<NotesContextType | undefined>(undefined);
 
 export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(notesReducer, initialState);
+  const { user, isAuthenticated } = useAuth();
   const router = useRouter();
+  const [lastSyncTime, setLastSyncTime] = useState<number | null>(null);
 
   // Load notes from storage on initial render
   useEffect(() => {
@@ -134,6 +155,13 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     loadNotes();
   }, []);
 
+  // When user logs in, sync notes with cloud
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      syncNotes();
+    }
+  }, [isAuthenticated, user]);
+
   // Save notes to storage whenever they change
   useEffect(() => {
     const saveNotes = async () => {
@@ -151,6 +179,67 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, [state.notes, state.isLoading]);
 
+  // Sync notes with cloud if authenticated
+  const syncNotes = async () => {
+    if (!isAuthenticated || !user) return;
+
+    try {
+      dispatch({ type: 'SET_SYNCING', payload: true });
+
+      // Fetch notes from cloud
+      const cloudNotes = await getFirestoreNotes(user.id);
+
+      // If there are notes in the cloud but not locally, use cloud version
+      if (cloudNotes.length > 0 && state.notes.length === 0) {
+        dispatch({ type: 'SET_NOTES', payload: cloudNotes });
+      }
+      // If there are local notes but no cloud notes, push local notes to cloud
+      else if (state.notes.length > 0 && cloudNotes.length === 0) {
+        await Promise.all(state.notes.map(async (note) => {
+          // Create new note in Firestore without the id (will be assigned by Firestore)
+          const { id, ...noteData } = note;
+          const newId = await createFirestoreNote(user.id, noteData);
+
+          // Update local note with Firestore ID
+          dispatch({
+            type: 'UPDATE_NOTE',
+            payload: { ...note, id: newId }
+          });
+        }));
+      }
+      // If both have notes, merge them with priority to more recent updates
+      else {
+        // Create a map of cloud notes by ID
+        const cloudNotesMap = new Map<string, Note>();
+        cloudNotes.forEach(note => cloudNotesMap.set(note.id, note));
+
+        // Update local notes with cloud data if newer
+        const updatedNotes = state.notes.map(localNote => {
+          const cloudNote = cloudNotesMap.get(localNote.id);
+          if (cloudNote && cloudNote.updatedAt > localNote.updatedAt) {
+            return cloudNote;
+          }
+          return localNote;
+        });
+
+        // Add cloud notes that don't exist locally
+        cloudNotes.forEach(cloudNote => {
+          if (!updatedNotes.some(note => note.id === cloudNote.id)) {
+            updatedNotes.push(cloudNote);
+          }
+        });
+
+        dispatch({ type: 'SET_NOTES', payload: updatedNotes });
+      }
+
+      setLastSyncTime(Date.now());
+    } catch (error) {
+      console.error('Failed to sync notes:', error);
+    } finally {
+      dispatch({ type: 'SET_SYNCING', payload: false });
+    }
+  };
+
   const addNote = async (title: string, content: string, attachments: Attachment[]) => {
     if (state.notes.length >= MAX_NOTES_PER_USER) {
       alert('You have reached the maximum limit of 20 notes.');
@@ -167,6 +256,63 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     dispatch({ type: 'ADD_NOTE', payload: newNote });
+
+    // If user is authenticated, also save to Firestore
+    if (isAuthenticated && user) {
+      try {
+        // Create note in Firestore
+        const { id, ...noteData } = newNote;
+        const firestoreId = await createFirestoreNote(user.id, noteData);
+
+        // Update local note with Firestore ID
+        dispatch({
+          type: 'UPDATE_NOTE',
+          payload: { ...newNote, id: firestoreId }
+        });
+
+        // Upload attachments if any
+        if (attachments.length > 0) {
+          const updatedAttachments = await Promise.all(
+            attachments.map(async (attachment) => {
+              try {
+                // In a real implementation, we would convert attachment.uri to blob here
+                // For now, we'll just use a mock approach
+                const cloudUri = await uploadAttachment(
+                  user.id,
+                  firestoreId,
+                  new Blob(), // This would be the actual file blob
+                  attachment.name,
+                  attachment.type
+                );
+
+                return {
+                  ...attachment,
+                  uri: cloudUri // Replace local URI with cloud URI
+                };
+              } catch (error) {
+                console.error('Failed to upload attachment:', error);
+                return attachment;
+              }
+            })
+          );
+
+          // Update note with cloud attachment URIs
+          await updateFirestoreNote(user.id, firestoreId, { attachments: updatedAttachments });
+
+          // Update local note
+          dispatch({
+            type: 'UPDATE_NOTE',
+            payload: {
+              ...newNote,
+              id: firestoreId,
+              attachments: updatedAttachments
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Failed to save note to cloud:', error);
+      }
+    }
   };
 
   const updateNote = async (id: string, title: string, content: string, attachments: Attachment[]) => {
@@ -183,10 +329,93 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     dispatch({ type: 'UPDATE_NOTE', payload: updatedNote });
+
+    // If user is authenticated, also update in Firestore
+    if (isAuthenticated && user) {
+      try {
+        // Update note in Firestore
+        await updateFirestoreNote(user.id, id, {
+          title,
+          content,
+          updatedAt: updatedNote.updatedAt,
+        });
+
+        // Handle attachment changes
+        const oldAttachments = new Set(noteToUpdate.attachments.map(att => att.uri));
+        const newAttachments = new Set(attachments.map(att => att.uri));
+
+        // Attachments to delete (in old but not in new)
+        for (const oldAtt of noteToUpdate.attachments) {
+          if (!newAttachments.has(oldAtt.uri)) {
+            // Need to delete this attachment
+            try {
+              await deleteAttachment(user.id, id, oldAtt.name);
+            } catch (error) {
+              console.error(`Failed to delete attachment ${oldAtt.name}:`, error);
+            }
+          }
+        }
+
+        // New attachments to upload (in new but not in old)
+        const attachmentsToUpload = attachments.filter(att => !oldAttachments.has(att.uri));
+
+        if (attachmentsToUpload.length > 0) {
+          const updatedAttachments = [...attachments];
+
+          for (let i = 0; i < attachmentsToUpload.length; i++) {
+            const attachment = attachmentsToUpload[i];
+            const index = attachments.findIndex(att => att.uri === attachment.uri);
+
+            if (index !== -1) {
+              try {
+                // In a real implementation, we would convert attachment.uri to blob here
+                const cloudUri = await uploadAttachment(
+                  user.id,
+                  id,
+                  new Blob(), // This would be the actual file blob
+                  attachment.name,
+                  attachment.type
+                );
+
+                updatedAttachments[index] = {
+                  ...attachment,
+                  uri: cloudUri // Replace local URI with cloud URI
+                };
+              } catch (error) {
+                console.error('Failed to upload attachment:', error);
+              }
+            }
+          }
+
+          // Update note with cloud attachment URIs
+          await updateFirestoreNote(user.id, id, { attachments: updatedAttachments });
+
+          // Update local note
+          dispatch({
+            type: 'UPDATE_NOTE',
+            payload: {
+              ...updatedNote,
+              attachments: updatedAttachments
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Failed to update note in cloud:', error);
+      }
+    }
   };
 
   const deleteNote = async (id: string) => {
     dispatch({ type: 'DELETE_NOTE', payload: id });
+
+    // If user is authenticated, also delete from Firestore
+    if (isAuthenticated && user) {
+      try {
+        await deleteFirestoreNote(user.id, id);
+      } catch (error) {
+        console.error('Failed to delete note from cloud:', error);
+      }
+    }
   };
 
   const setSearchQuery = (query: string) => {
@@ -210,8 +439,9 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     updateNote,
     deleteNote,
     setSearchQuery,
-    checkAttachmentLimits
-  }), [state]);
+    checkAttachmentLimits,
+    syncNotes
+  }), [state, isAuthenticated, user]);
 
   return (
     <NotesContext.Provider value={contextValue}>

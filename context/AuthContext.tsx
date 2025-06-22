@@ -2,6 +2,20 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from '@/types';
 import { getFromStorage, saveToStorage, removeFromStorage } from '@/utils/storage';
 import { router } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
+import {
+  signIn,
+  signUp,
+  signInWithGoogle,
+  signInWithGithub,
+  logOut,
+  createUserProfile,
+  getUserProfile,
+  updateUserProfile,
+  listenToAuthState
+} from '@/config/firebaseService';
+import { User as FirebaseUser } from 'firebase/auth';
+import { Platform } from 'react-native';
 
 // Auth types
 type AuthState = {
@@ -29,6 +43,20 @@ const AUTH_EXPIRY_DAYS = 7; // 7 days login expiry
 // Create the auth context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Helper to convert Firebase user to our User model
+const mapFirebaseUser = (fbUser: FirebaseUser): User => {
+  return {
+    id: fbUser.uid,
+    email: fbUser.email || '',
+    displayName: fbUser.displayName || fbUser.email?.split('@')[0] || '',
+    photoURL: fbUser.photoURL || undefined,
+    createdAt: parseInt(fbUser.metadata.creationTime || Date.now().toString(), 10)
+  };
+};
+
+// Initialize WebBrowser for OAuth redirects
+WebBrowser.maybeCompleteAuthSession();
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, setState] = useState<AuthState>({
     user: null,
@@ -49,26 +77,63 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           // Auth expired, clear local data
           await removeFromStorage(USER_STORAGE_KEY);
           await removeFromStorage(AUTH_EXPIRY_KEY);
+          await logOut(); // Also sign out from Firebase
           setState({ user: null, isAuthenticated: false, isLoading: false });
           return;
         }
 
-        // Check for stored user
-        const userString = await getFromStorage(USER_STORAGE_KEY);
-        if (userString) {
-          const user = JSON.parse(userString);
-          setState({
-            user,
-            isAuthenticated: true,
-            isLoading: false,
-          });
-        } else {
-          setState({
-            user: null,
-            isAuthenticated: false,
-            isLoading: false,
-          });
-        }
+        // Set up Firebase auth state listener
+        const unsubscribe = listenToAuthState(async (firebaseUser) => {
+          if (firebaseUser) {
+            // User is signed in to Firebase
+            try {
+              // Get or create user profile
+              let userProfile = await getUserProfile(firebaseUser.uid);
+
+              if (!userProfile) {
+                // Create new user profile
+                const newUser = mapFirebaseUser(firebaseUser);
+                await createUserProfile(firebaseUser.uid, newUser);
+                userProfile = newUser;
+              }
+
+              // Update auth expiry
+              const expiryDate = Date.now() + (AUTH_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
+              await saveToStorage(USER_STORAGE_KEY, JSON.stringify(userProfile));
+              await saveToStorage(AUTH_EXPIRY_KEY, expiryDate.toString());
+
+              setState({
+                user: userProfile,
+                isAuthenticated: true,
+                isLoading: false,
+              });
+            } catch (error) {
+              console.error('Error setting up user:', error);
+              setState({ user: null, isAuthenticated: false, isLoading: false });
+            }
+          } else {
+            // User is not signed in to Firebase
+            // Check if we have a stored user from previous session
+            const userString = await getFromStorage(USER_STORAGE_KEY);
+            if (userString) {
+              const user = JSON.parse(userString);
+              setState({
+                user,
+                isAuthenticated: true,
+                isLoading: false,
+              });
+            } else {
+              setState({
+                user: null,
+                isAuthenticated: false,
+                isLoading: false,
+              });
+            }
+          }
+        });
+
+        // Cleanup auth listener
+        return () => unsubscribe();
       } catch (error) {
         console.error('Auth check error:', error);
         setState({
@@ -82,99 +147,102 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkAuth();
   }, []);
 
-  const setAuthWithExpiry = async (user: User) => {
-    // Set expiry date (7 days from now)
-    const expiryDate = Date.now() + (AUTH_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
-
-    await saveToStorage(USER_STORAGE_KEY, JSON.stringify(user));
-    await saveToStorage(AUTH_EXPIRY_KEY, expiryDate.toString());
-
-    setState({
-      user,
-      isAuthenticated: true,
-      isLoading: false,
-    });
-  };
-
-  // Mock auth functions - to be replaced with Firebase later
   const login = async (email: string, password: string) => {
-    // For now, we'll just mock a successful login
-    const mockUser: User = {
-      id: 'mock-user-id',
-      email,
-      displayName: email.split('@')[0],
-      createdAt: Date.now(),
-    };
-
-    await setAuthWithExpiry(mockUser);
+    try {
+      const userCredential = await signIn(email, password);
+      // Auth state listener will handle the state update
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   };
 
   const register = async (email: string, password: string) => {
-    // Mock user registration
-    const newUser: User = {
-      id: 'mock-user-id',
-      email,
-      displayName: email.split('@')[0],
-      createdAt: Date.now(),
-    };
-
-    await setAuthWithExpiry(newUser);
+    try {
+      const userCredential = await signUp(email, password);
+      // Auth state listener will handle the state update
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+    }
   };
 
   const loginWithGoogle = async () => {
-    // Mock Google login
-    const mockUser: User = {
-      id: 'google-user-id',
-      email: 'google-user@example.com',
-      displayName: 'Google User',
-      photoURL: 'https://via.placeholder.com/150',
-      createdAt: Date.now(),
-    };
+    try {
+      if (Platform.OS !== 'web') {
+        // For native platforms, we should implement OAuth with Expo AuthSession
+        alert('Google Sign-In is currently only supported on web');
+        return;
+      }
 
-    await setAuthWithExpiry(mockUser);
+      await signInWithGoogle();
+      // Auth state listener will handle the state update
+    } catch (error) {
+      console.error('Google login error:', error);
+      throw error;
+    }
   };
 
   const loginWithGithub = async () => {
-    // Mock GitHub login
-    const mockUser: User = {
-      id: 'github-user-id',
-      email: 'github-user@example.com',
-      displayName: 'GitHub User',
-      photoURL: 'https://via.placeholder.com/150',
-      createdAt: Date.now(),
-    };
+    try {
+      if (Platform.OS !== 'web') {
+        // For native platforms, we should implement OAuth with Expo AuthSession
+        alert('GitHub Sign-In is currently only supported on web');
+        return;
+      }
 
-    await setAuthWithExpiry(mockUser);
+      await signInWithGithub();
+      // Auth state listener will handle the state update
+    } catch (error) {
+      console.error('GitHub login error:', error);
+      throw error;
+    }
   };
 
   const logout = async () => {
-    await removeFromStorage(USER_STORAGE_KEY);
-    await removeFromStorage(AUTH_EXPIRY_KEY);
+    try {
+      await logOut();
+      await removeFromStorage(USER_STORAGE_KEY);
+      await removeFromStorage(AUTH_EXPIRY_KEY);
 
-    setState({
-      user: null,
-      isAuthenticated: false,
-      isLoading: false,
-    });
+      setState({
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+      });
 
-    // Redirect to home page after logout
-    router.replace('/');
+      // Redirect to home page after logout
+      router.replace('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
   };
 
   const updateUserPhoto = async (photoURL: string) => {
     if (!state.user) return;
 
-    const updatedUser: User = {
-      ...state.user,
-      photoURL,
-    };
+    try {
+      // Update in Firebase
+      await updateUserProfile(state.user.id, { photoURL });
 
-    await saveToStorage(USER_STORAGE_KEY, JSON.stringify(updatedUser));
+      // Update local state
+      const updatedUser: User = {
+        ...state.user,
+        photoURL,
+      };
 
-    setState({
-      ...state,
-      user: updatedUser,
-    });
+      // Update in local storage
+      await saveToStorage(USER_STORAGE_KEY, JSON.stringify(updatedUser));
+
+      setState({
+        ...state,
+        user: updatedUser,
+      });
+    } catch (error) {
+      console.error('Update photo error:', error);
+      throw error;
+    }
   };
 
   return (
