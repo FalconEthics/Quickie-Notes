@@ -92,7 +92,7 @@ export default function Modal({
           />
 
           <motion.div
-            className={`bg-white rounded-lg shadow-lg w-full ${sizeClasses[size]} relative`}
+            className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full ${sizeClasses[size]} relative transition-colors duration-300`}
             variants={modalVariants}
             initial="hidden"
             animate="visible"
@@ -101,14 +101,14 @@ export default function Modal({
           >
             {/* Modal Header */}
             {title && (
-              <div className="flex justify-between items-center p-4 border-b">
-                <h3 className={`text-xl font-semibold flex items-center ${titleClassName}`}>
+              <div className="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <h3 className={`text-xl font-semibold text-gray-800 dark:text-gray-100 flex items-center ${titleClassName}`}>
                   {titleIcon && <span className="mr-2">{titleIcon}</span>}
                   {title}
                 </h3>
                 <button
                   onClick={onClose}
-                  className="text-gray-500 hover:text-red-500 transition-colors"
+                  className="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
                   aria-label="Close"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -119,13 +119,13 @@ export default function Modal({
             )}
 
             {/* Modal Body */}
-            <div className="p-4">
+            <div className="p-4 text-gray-800 dark:text-gray-100">
               {children}
             </div>
 
             {/* Modal Footer */}
             {footer && (
-              <div className="flex justify-end space-x-2 p-4 border-t">
+              <div className="flex justify-end space-x-2 p-4 border-t dark:border-gray-700">
                 {footer}
               </div>
             )}
