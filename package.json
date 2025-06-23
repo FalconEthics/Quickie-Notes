@@ -2,6 +2,7 @@
   "name": "quickie-notes",
   "private": true,
   "version": "0.0.0",
+  "description": "A modern, lightweight note-taking application built with React 19 and Firebase. Quickly jot down thoughts, create to-do lists, and organize ideas with real-time synchronization.",
   "type": "module",
   "scripts": {
     "dev": "vite",
