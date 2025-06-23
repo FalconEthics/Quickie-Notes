@@ -14,12 +14,12 @@ export default function Home() {
       <div className="max-w-5xl mx-auto">
         {/* Greeting section */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
             {currentUser
               ? `Welcome back, ${currentUser.displayName || 'User'}!`
               : 'Welcome to Quickie Notes!'}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             {currentUser
               ? 'Your notes are synced to your account.'
               : 'Create and manage your notes. Sign in to sync them across devices.'}
@@ -32,14 +32,14 @@ export default function Home() {
         {/* Notes grid */}
         {loading ? (
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 dark:border-blue-400"></div>
           </div>
         ) : (
           <>
             {filteredNotes.length === 0 ? (
-              <div className="text-center py-12 bg-gray-50 rounded-lg">
-                <h3 className="text-xl font-medium text-gray-600 mb-2">No notes found</h3>
-                <p className="text-gray-500">
+              <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-medium text-gray-600 dark:text-gray-300 mb-2">No notes found</h3>
+                <p className="text-gray-500 dark:text-gray-400">
                   {currentUser?.searchTerm
                     ? 'Try a different search term.'
                     : 'Click "Add a new note..." to create your first note.'}

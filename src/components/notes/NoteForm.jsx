@@ -63,7 +63,7 @@ export default function NoteForm() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-8 transition-colors duration-300">
       <AnimatePresence mode="wait">
         {!isExpanded ? (
           <motion.div
@@ -73,7 +73,7 @@ export default function NoteForm() {
             animate="collapsed"
             exit="exit"
             onClick={toggleExpand}
-            className="p-4 cursor-pointer flex items-center justify-center text-gray-500 hover:bg-gray-50"
+            className="p-4 cursor-pointer flex items-center justify-center text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
           >
             <FaPlus className="mr-2" />
             <span>Add a new note...</span>
@@ -89,11 +89,11 @@ export default function NoteForm() {
             className="p-4"
           >
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-medium">Create New Note</h3>
+              <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100">Create New Note</h3>
               <button
                 type="button"
                 onClick={handleClose}
-                className="text-gray-500 hover:text-red-500 transition-colors"
+                className="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
               >
                 <FaTimes />
               </button>
@@ -105,7 +105,7 @@ export default function NoteForm() {
                 placeholder="Title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                 autoFocus
               />
             </div>
@@ -116,7 +116,7 @@ export default function NoteForm() {
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 rows="4"
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
               />
             </div>
 

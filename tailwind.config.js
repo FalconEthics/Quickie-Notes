@@ -4,8 +4,24 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // Enable dark mode with class strategy
   theme: {
     extend: {
+      colors: {
+        // Custom colors with dark mode variants
+        background: {
+          light: '#ffffff',
+          dark: '#121212',
+        },
+        surface: {
+          light: '#f5f5f5',
+          dark: '#1e1e1e',
+        },
+        text: {
+          light: '#333333',
+          dark: '#e0e0e0',
+        },
+      },
       animation: {
         'fadeIn': 'fadeIn 0.5s ease-in-out',
         'fadeOut': 'fadeOut 0.5s ease-in-out',
@@ -59,4 +75,3 @@ export default {
   },
   plugins: [],
 }
-

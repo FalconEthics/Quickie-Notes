@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaSearch, FaSignInAlt, FaUserCircle, FaSignOutAlt, FaHome } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 import { useNotes } from '../../context/NotesContext';
+import ThemeToggle from '../ui/ThemeToggle';
 
 export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -67,7 +68,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md py-4 px-6 flex items-center justify-between">
+    <nav className="bg-white shadow-md py-4 px-6 flex items-center justify-between transition-colors duration-300 dark:bg-gray-800 dark:shadow-gray-900">
       {/* Logo and App Name */}
       <Link to="/" className="flex items-center">
         <img
@@ -75,7 +76,7 @@ export default function Navbar() {
           alt="Quickie-Notes Logo"
           className="h-8 w-8 mr-2"
         />
-        <span className="text-xl font-bold text-blue-600">Quickie-Notes</span>
+        <span className="text-xl font-bold text-blue-600 dark:text-blue-400">Quickie-Notes</span>
       </Link>
 
       {/* Right Side - Search, Auth, Profile */}
@@ -86,19 +87,19 @@ export default function Navbar() {
             {(isSearchOpen || isSearchAnimating) ? (
               <div
                 ref={searchRef}
-                className="flex items-center bg-gray-100 rounded-full overflow-hidden animate-expandDown"
+                className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden animate-expandDown"
               >
                 <input
                   type="text"
                   placeholder="Search notes by title..."
                   value={searchInput}
                   onChange={handleSearchChange}
-                  className="py-1 px-3 outline-none bg-gray-100 w-40 md:w-64"
+                  className="py-1 px-3 outline-none bg-gray-100 dark:bg-gray-700 dark:text-gray-200 w-40 md:w-64"
                   autoFocus
                 />
                 <button
                   onClick={toggleSearch}
-                  className="p-2 text-gray-600 hover:text-blue-500 transition-colors duration-200"
+                  className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
                 >
                   <FaSearch />
                 </button>
@@ -106,7 +107,7 @@ export default function Navbar() {
             ) : (
               <button
                 onClick={toggleSearch}
-                className="p-2 text-gray-600 hover:text-blue-500 transition-colors duration-200"
+                className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
               >
                 <FaSearch />
               </button>
@@ -119,7 +120,7 @@ export default function Navbar() {
           <>
             <button
               onClick={handleLogout}
-              className="flex items-center text-gray-600 hover:text-blue-500 transition-colors duration-200"
+              className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
             >
               <FaSignOutAlt className="mr-1" />
               <span className="hidden md:inline">Logout</span>
@@ -127,7 +128,7 @@ export default function Navbar() {
             {isProfilePage ? (
               <Link
                 to="/"
-                className="flex items-center text-gray-600 hover:text-blue-500 transition-colors duration-200"
+                className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
               >
                 <FaHome className="text-2xl" />
                 <span className="hidden md:inline ml-1">Home</span>
@@ -135,7 +136,7 @@ export default function Navbar() {
             ) : (
               <Link
                 to="/profile"
-                className="flex items-center text-gray-600 hover:text-blue-500 transition-colors duration-200"
+                className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
               >
                 {currentUser.photoURL ? (
                   <img
@@ -149,15 +150,27 @@ export default function Navbar() {
                 <span className="hidden md:inline ml-1">Profile</span>
               </Link>
             )}
+
+            {/* Theme Toggle */}
+            <div className="ml-2">
+              <ThemeToggle />
+            </div>
           </>
         ) : (
-          <Link
-            to="/login"
-            className="flex items-center text-gray-600 hover:text-blue-500 transition-colors duration-200"
-          >
-            <FaSignInAlt className="mr-1" />
-            <span>Login / Sign Up</span>
-          </Link>
+          <>
+            <Link
+              to="/login"
+              className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
+            >
+              <FaSignInAlt className="mr-1" />
+              <span>Login / Sign Up</span>
+            </Link>
+
+            {/* Theme Toggle */}
+            <div className="ml-2">
+              <ThemeToggle />
+            </div>
+          </>
         )}
       </div>
     </nav>

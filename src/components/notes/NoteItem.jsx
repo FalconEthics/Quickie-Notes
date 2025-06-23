@@ -42,29 +42,29 @@ export default function NoteItem({ note }) {
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-md p-4 h-full flex flex-col"
+      className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 h-full flex flex-col transition-colors duration-300"
       variants={noteVariants}
       initial="hidden"
       animate="visible"
       exit="exit"
       layout
     >
-      <h3 className="text-lg font-semibold mb-2 text-gray-800">{note.title}</h3>
+      <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">{note.title}</h3>
 
-      <div className="text-gray-600 mb-4 flex-grow overflow-hidden">
+      <div className="text-gray-600 dark:text-gray-300 mb-4 flex-grow overflow-hidden">
         {/* Only show the first few lines of content */}
         <p className="line-clamp-4">{note.content || "No content"}</p>
       </div>
 
-      <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-100">
-        <span className="text-xs text-gray-500">
+      <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+        <span className="text-xs text-gray-500 dark:text-gray-400">
           {formatDate(note.createdAt)}
         </span>
 
         <div className="flex space-x-2">
           <button
             onClick={() => setIsEditModalOpen(true)}
-            className="text-blue-500 hover:text-blue-700 transition-colors"
+            className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
             aria-label="Edit note"
           >
             <FaEdit />
@@ -72,7 +72,7 @@ export default function NoteItem({ note }) {
 
           <button
             onClick={() => setIsDeleteModalOpen(true)}
-            className="text-red-500 hover:text-red-700 transition-colors"
+            className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors"
             aria-label="Delete note"
           >
             <FaTrash />
