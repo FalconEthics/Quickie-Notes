@@ -42,7 +42,7 @@ export default function NoteItem({ note }) {
 
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 h-full flex flex-col transition-colors duration-300"
+      className="bg-white dark:bg-[#181818] rounded-lg shadow-md p-4 h-full flex flex-col transition-colors duration-300"
       variants={noteVariants}
       initial="hidden"
       animate="visible"
@@ -64,7 +64,7 @@ export default function NoteItem({ note }) {
         <div className="flex space-x-2">
           <button
             onClick={() => setIsEditModalOpen(true)}
-            className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+            className="text-yellow-500 hover:text-yellow-700 dark:text-[#9B7D56] dark:hover:text-yellow-300 transition-colors"
             aria-label="Edit note"
           >
             <FaEdit />

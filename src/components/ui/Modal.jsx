@@ -92,7 +92,7 @@ export default function Modal({
           />
 
           <motion.div
-            className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full ${sizeClasses[size]} relative transition-colors duration-300`}
+            className={`bg-white dark:bg-[#181818] rounded-lg shadow-lg w-full ${sizeClasses[size]} relative transition-colors duration-300`}
             variants={modalVariants}
             initial="hidden"
             animate="visible"

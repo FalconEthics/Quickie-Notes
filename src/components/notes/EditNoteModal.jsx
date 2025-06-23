@@ -62,7 +62,7 @@ export default function EditNoteModal({ isOpen, onClose, note }) {
     <>
       <button
         onClick={handleDiscardAttempt}
-        className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors"
+        className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-[#393B41] text-gray-700 dark:text-gray-300 transition-colors"
       >
         Discard
       </button>
@@ -71,8 +71,8 @@ export default function EditNoteModal({ isOpen, onClose, note }) {
         disabled={!hasChanges}
         className={`px-4 py-2 rounded-md text-white transition-colors ${
           hasChanges
-            ? 'bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
-            : 'bg-blue-300 dark:bg-blue-800/50 cursor-not-allowed'
+            ? 'bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700'
+            : 'bg-yellow-300 dark:bg-yellow-800/50 cursor-not-allowed'
         }`}
         whileHover={hasChanges ? { scale: 1.05 } : {}}
         whileTap={hasChanges ? { scale: 0.95 } : {}}
@@ -87,7 +87,7 @@ export default function EditNoteModal({ isOpen, onClose, note }) {
     <>
       <button
         onClick={handleConfirmClose}
-        className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors"
+        className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-[#393B41] text-gray-700 dark:text-gray-300 transition-colors"
       >
         Cancel
       </button>
@@ -118,7 +118,7 @@ export default function EditNoteModal({ isOpen, onClose, note }) {
             type="text"
             value={note?.title || ''}
             disabled
-            className="w-full px-3 py-2 border rounded-md bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 dark:border-gray-600"
+            className="w-full px-3 py-2 border rounded-md bg-gray-100 dark:bg-[#393B41] text-gray-800 dark:text-gray-300 dark:border-gray-600"
           />
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Note: Title cannot be changed</p>
         </div>
@@ -130,7 +130,7 @@ export default function EditNoteModal({ isOpen, onClose, note }) {
             value={content}
             onChange={handleContentChange}
             rows="6"
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
           />
         </div>
       </Modal>

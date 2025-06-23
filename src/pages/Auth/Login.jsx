@@ -94,7 +94,7 @@ export default function Login() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 placeholder="Email address"
               />
             </div>
@@ -113,7 +113,7 @@ export default function Login() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 placeholder="Password"
               />
             </div>
@@ -121,7 +121,7 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300"
+            className="w-full bg-yellow-500 text-white py-2 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:bg-yellow-300"
             disabled={loading}
           >
             {loading ? 'Logging in...' : 'Log in'}
@@ -146,7 +146,7 @@ export default function Login() {
 
           <button
             onClick={handleGithubLogin}
-            className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-900 flex items-center justify-center"
+            className="w-full bg-[#181818] text-white py-2 px-4 rounded-md hover:bg-gray-900 flex items-center justify-center"
             disabled={loading}
           >
             <FaGithub className="mr-2" />
@@ -156,7 +156,7 @@ export default function Login() {
 
         <p className="mt-6 text-center text-gray-600">
           Don't have an account?{' '}
-          <Link to="/register" className="text-blue-500 hover:underline">
+          <Link to="/register" className="text-yellow-500 hover:underline">
             Sign up
           </Link>
         </p>

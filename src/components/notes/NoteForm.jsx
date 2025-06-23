@@ -63,7 +63,7 @@ export default function NoteForm() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-8 transition-colors duration-300">
+    <div className="bg-white dark:bg-[#181818] rounded-lg shadow-md overflow-hidden mb-8 transition-colors duration-300">
       <AnimatePresence mode="wait">
         {!isExpanded ? (
           <motion.div
@@ -73,7 +73,7 @@ export default function NoteForm() {
             animate="collapsed"
             exit="exit"
             onClick={toggleExpand}
-            className="p-4 cursor-pointer flex items-center justify-center text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+            className="p-4 cursor-pointer flex items-center justify-center text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#393B41] transition-colors duration-200"
           >
             <FaPlus className="mr-2" />
             <span>Add a new note...</span>
@@ -105,7 +105,7 @@ export default function NoteForm() {
                 placeholder="Title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                 autoFocus
               />
             </div>
@@ -116,14 +116,14 @@ export default function NoteForm() {
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 rows="4"
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 resize-none dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
               />
             </div>
 
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-colors"
               >
                 Add Note
               </button>

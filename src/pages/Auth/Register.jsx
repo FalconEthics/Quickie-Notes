@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaGoogle, FaGithub, FaEnvelope, FaLock, FaUser, FaExclamationCircle } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock, FaExclamationCircle, FaGoogle, FaGithub } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 import Layout from '../../components/layout/Layout';
 
 export default function Register() {
-  const [name, setName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -14,12 +14,12 @@ export default function Register() {
   const { register, loginWithGoogle, loginWithGithub } = useAuth();
   const navigate = useNavigate();
 
-  // Handle form submission
+  // Handle email/password registration
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate inputs
-    if (!name || !email || !password || !confirmPassword) {
+    // Validation
+    if (!displayName || !email || !password || !confirmPassword) {
       setError('Please fill in all fields');
       return;
     }
@@ -30,19 +30,20 @@ export default function Register() {
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError('Password must be at least 6 characters long');
       return;
     }
 
     try {
       setError('');
       setLoading(true);
-      await register(email, password, name);
+      await register(email, password, displayName);
       navigate('/');
     } catch (err) {
       console.error('Registration error:', err);
+
       if (err.code === 'auth/email-already-in-use') {
-        setError('Email already in use');
+        setError('This email is already registered');
       } else {
         setError('Failed to create an account. Please try again.');
       }
@@ -51,7 +52,7 @@ export default function Register() {
     }
   };
 
-  // Handle Google sign-up
+  // Handle Google login/registration
   const handleGoogleSignUp = async () => {
     try {
       setError('');
@@ -59,14 +60,14 @@ export default function Register() {
       await loginWithGoogle();
       navigate('/');
     } catch (err) {
-      console.error('Google sign-up error:', err);
+      console.error('Google sign up error:', err);
       setError('Failed to sign up with Google. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle GitHub sign-up
+  // Handle GitHub login/registration
   const handleGithubSignUp = async () => {
     try {
       setError('');
@@ -74,7 +75,7 @@ export default function Register() {
       await loginWithGithub();
       navigate('/');
     } catch (err) {
-      console.error('GitHub sign-up error:', err);
+      console.error('GitHub sign up error:', err);
       setError('Failed to sign up with GitHub. Please try again.');
     } finally {
       setLoading(false);
@@ -83,42 +84,44 @@ export default function Register() {
 
   return (
     <Layout>
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 mt-10">
-        <h2 className="text-2xl font-bold text-center mb-6">Create an Account</h2>
+      <div className="max-w-md mx-auto bg-white dark:bg-[#181818] rounded-lg shadow-md p-6 mt-10 transition-colors duration-300">
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">Create an Account</h2>
 
         {error && (
-          <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 flex items-center">
+          <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-3 rounded-md mb-4 flex items-center">
             <FaExclamationCircle className="mr-2" />
             <span>{error}</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Display Name */}
           <div>
-            <label className="block text-gray-700 mb-1" htmlFor="name">
+            <label className="block text-gray-700 dark:text-gray-300 mb-1" htmlFor="displayName">
               Name
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 dark:text-gray-400">
                 <FaUser />
               </div>
               <input
-                id="name"
+                id="displayName"
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
                 placeholder="Your name"
               />
             </div>
           </div>
 
+          {/* Email */}
           <div>
-            <label className="block text-gray-700 mb-1" htmlFor="email">
+            <label className="block text-gray-700 dark:text-gray-300 mb-1" htmlFor="email">
               Email
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 dark:text-gray-400">
                 <FaEnvelope />
               </div>
               <input
@@ -126,18 +129,19 @@ export default function Register() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
                 placeholder="Email address"
               />
             </div>
           </div>
 
+          {/* Password */}
           <div>
-            <label className="block text-gray-700 mb-1" htmlFor="password">
+            <label className="block text-gray-700 dark:text-gray-300 mb-1" htmlFor="password">
               Password
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 dark:text-gray-400">
                 <FaLock />
               </div>
               <input
@@ -145,26 +149,27 @@ export default function Register() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Password (minimum 6 characters)"
+                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
+                placeholder="Password (min 6 characters)"
               />
             </div>
           </div>
 
+          {/* Confirm Password */}
           <div>
-            <label className="block text-gray-700 mb-1" htmlFor="confirm-password">
+            <label className="block text-gray-700 dark:text-gray-300 mb-1" htmlFor="confirmPassword">
               Confirm Password
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 dark:text-gray-400">
                 <FaLock />
               </div>
               <input
-                id="confirm-password"
+                id="confirmPassword"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
                 placeholder="Confirm password"
               />
             </div>
@@ -172,43 +177,43 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300"
             disabled={loading}
+            className="w-full bg-yellow-500 text-white py-2 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:bg-yellow-300 dark:disabled:bg-yellow-800"
           >
-            {loading ? 'Creating account...' : 'Create Account'}
+            {loading ? 'Creating Account...' : 'Sign Up'}
           </button>
         </form>
 
         <div className="my-4 flex items-center">
-          <hr className="flex-grow border-gray-300" />
-          <span className="px-3 text-gray-500 text-sm">OR</span>
-          <hr className="flex-grow border-gray-300" />
+          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
+          <span className="px-3 text-gray-500 dark:text-gray-400 text-sm">OR</span>
+          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
         </div>
 
         <div className="space-y-3">
           <button
             onClick={handleGoogleSignUp}
-            className="w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-50 flex items-center justify-center"
+            className="w-full bg-white dark:bg-[#393B41] border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 flex items-center justify-center transition-colors"
             disabled={loading}
           >
             <FaGoogle className="text-red-500 mr-2" />
-            Sign up with Google
+            Continue with Google
           </button>
 
           <button
             onClick={handleGithubSignUp}
-            className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-900 flex items-center justify-center"
+            className="w-full bg-[#181818] dark:bg-[#393B41] text-white py-2 px-4 rounded-md hover:bg-gray-900 dark:hover:bg-gray-600 flex items-center justify-center transition-colors"
             disabled={loading}
           >
             <FaGithub className="mr-2" />
-            Sign up with GitHub
+            Continue with GitHub
           </button>
         </div>
 
-        <p className="mt-6 text-center text-gray-600">
+        <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-500 hover:underline">
-            Log in
+          <Link to="/login" className="text-yellow-500 dark:text-[#9B7D56] hover:underline">
+            Sign In
           </Link>
         </p>
       </div>

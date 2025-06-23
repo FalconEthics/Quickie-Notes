@@ -71,7 +71,7 @@ export default function Profile() {
     return (
       <Layout>
         <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 dark:border-blue-400"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500 dark:border-yellow-400"></div>
         </div>
       </Layout>
     );
@@ -82,11 +82,11 @@ export default function Profile() {
   return (
     <Layout>
       <div className="max-w-3xl mx-auto">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-colors duration-300">
+        <div className="bg-white dark:bg-[#181818] rounded-lg shadow-md overflow-hidden transition-colors duration-300">
           {/* Header */}
-          <div className="bg-blue-500 dark:bg-blue-600 p-6 text-white text-center">
+          <div className="bg-yellow-500 dark:bg-yellow-600 p-6 text-white text-center">
             <h1 className="text-2xl font-bold mb-2">My Profile</h1>
-            <p className="text-blue-100">View and manage your account details</p>
+            <p className="text-yellow-100">View and manage your account details</p>
           </div>
 
           {/* User Info */}
@@ -129,7 +129,7 @@ export default function Profile() {
                         type="text"
                         value={displayName}
                         onChange={(e) => setDisplayName(e.target.value)}
-                        className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                        className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
                         autoFocus
                       />
                     </div>
@@ -138,14 +138,14 @@ export default function Profile() {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300 dark:disabled:bg-blue-800 transition-colors"
+                        className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:bg-yellow-300 dark:disabled:bg-yellow-800 transition-colors"
                       >
                         {loading ? 'Saving...' : 'Save'}
                       </button>
                       <button
                         type="button"
                         onClick={handleCancel}
-                        className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                        className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-[#393B41] transition-colors"
                       >
                         Cancel
                       </button>
@@ -159,7 +159,7 @@ export default function Profile() {
                       </h2>
                       <button
                         onClick={() => setIsEditing(true)}
-                        className="text-blue-500 dark:text-blue-400 text-sm hover:underline"
+                        className="text-yellow-500 dark:text-[#9B7D56] text-sm hover:underline"
                       >
                         Edit name
                       </button>

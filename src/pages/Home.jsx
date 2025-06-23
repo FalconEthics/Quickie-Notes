@@ -32,12 +32,12 @@ export default function Home() {
         {/* Notes grid */}
         {loading ? (
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 dark:border-blue-400"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500 dark:border-yellow-400"></div>
           </div>
         ) : (
           <>
             {filteredNotes.length === 0 ? (
-              <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <div className="text-center py-12 shadow-md bg-gray-50 dark:bg-[#181818] rounded-lg">
                 <h3 className="text-xl font-medium text-gray-600 dark:text-gray-300 mb-2">No notes found</h3>
                 <p className="text-gray-500 dark:text-gray-400">
                   {currentUser?.searchTerm
