@@ -6,8 +6,10 @@ import {
   Route,
   Navigate,
   useRouteError,
-  isRouteErrorResponse
+  isRouteErrorResponse,
+  useLocation
 } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import './index.css'
 import { AuthProvider } from './context/AuthContext'
 import { NotesProvider } from './context/NotesContext'
@@ -54,6 +56,24 @@ function LoadingSpinner() {
   );
 }
 
+// Routes with AnimatePresence
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home />} errorElement={<ErrorBoundary />} />
+        <Route path="/login" element={<Login />} errorElement={<ErrorBoundary />} />
+        <Route path="/register" element={<Register />} errorElement={<ErrorBoundary />} />
+        <Route path="/profile" element={<Profile />} errorElement={<ErrorBoundary />} />
+        <Route path="/404" element={<NotFound />} errorElement={<ErrorBoundary />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
 // App Component with Routes
 function App() {
   return (
@@ -62,14 +82,7 @@ function App() {
         <AuthProvider>
           <NotesProvider>
             <Suspense fallback={<LoadingSpinner />}>
-              <Routes>
-                <Route path="/" element={<Home />} errorElement={<ErrorBoundary />} />
-                <Route path="/login" element={<Login />} errorElement={<ErrorBoundary />} />
-                <Route path="/register" element={<Register />} errorElement={<ErrorBoundary />} />
-                <Route path="/profile" element={<Profile />} errorElement={<ErrorBoundary />} />
-                <Route path="/404" element={<NotFound />} errorElement={<ErrorBoundary />} />
-                <Route path="*" element={<Navigate to="/404" replace />} />
-              </Routes>
+              <AnimatedRoutes />
             </Suspense>
           </NotesProvider>
         </AuthProvider>

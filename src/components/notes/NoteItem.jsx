@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import { useNotes } from '../../context/NotesContext';
 import EditNoteModal from './EditNoteModal';
 import DeleteNoteModal from './DeleteNoteModal';
@@ -18,8 +19,36 @@ export default function NoteItem({ note }) {
     });
   };
 
+  // Animation variants for note item
+  const noteVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        duration: 0.3,
+        ease: "easeIn"
+      }
+    }
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 h-full flex flex-col animate-fadeIn">
+    <motion.div
+      className="bg-white rounded-lg shadow-md p-4 h-full flex flex-col"
+      variants={noteVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      layout
+    >
       <h3 className="text-lg font-semibold mb-2 text-gray-800">{note.title}</h3>
 
       <div className="text-gray-600 mb-4 flex-grow overflow-hidden">
@@ -65,6 +94,6 @@ export default function NoteItem({ note }) {
         noteId={note.id}
         title={note.title}
       />
-    </div>
+    </motion.div>
   );
 }

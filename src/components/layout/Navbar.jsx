@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaSearch, FaSignInAlt, FaUserCircle, FaSignOutAlt, FaHome } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
@@ -7,13 +7,27 @@ import { useNotes } from '../../context/NotesContext';
 export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
+  const [isSearchAnimating, setIsSearchAnimating] = useState(false);
   const { currentUser, logout } = useAuth();
   const { handleSearch, clearNotes } = useNotes();
   const navigate = useNavigate();
   const location = useLocation(); // Get current location
+  const searchRef = useRef(null);
 
   // Check if currently on profile page
   const isProfilePage = location.pathname === '/profile';
+
+  // Handle search animation timing
+  useEffect(() => {
+    if (isSearchOpen) {
+      setIsSearchAnimating(true);
+    } else if (!isSearchOpen && isSearchAnimating) {
+      const timer = setTimeout(() => {
+        setIsSearchAnimating(false);
+      }, 300); // Match this with the animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [isSearchOpen]);
 
   // Create a stable search handler that doesn't depend on handleSearch
   const searchHandler = useCallback((term) => {
@@ -69,18 +83,22 @@ export default function Navbar() {
         {/* Search - Only show if user is logged in */}
         {currentUser && (
           <div className="relative">
-            {isSearchOpen ? (
-              <div className="flex items-center bg-gray-100 rounded-full overflow-hidden transition-all duration-300 ease-in-out">
+            {(isSearchOpen || isSearchAnimating) ? (
+              <div
+                ref={searchRef}
+                className="flex items-center bg-gray-100 rounded-full overflow-hidden animate-expandDown"
+              >
                 <input
                   type="text"
                   placeholder="Search notes by title..."
                   value={searchInput}
                   onChange={handleSearchChange}
                   className="py-1 px-3 outline-none bg-gray-100 w-40 md:w-64"
+                  autoFocus
                 />
                 <button
                   onClick={toggleSearch}
-                  className="p-2 text-gray-600 hover:text-blue-500"
+                  className="p-2 text-gray-600 hover:text-blue-500 transition-colors duration-200"
                 >
                   <FaSearch />
                 </button>
@@ -88,7 +106,7 @@ export default function Navbar() {
             ) : (
               <button
                 onClick={toggleSearch}
-                className="p-2 text-gray-600 hover:text-blue-500 transition-all duration-300"
+                className="p-2 text-gray-600 hover:text-blue-500 transition-colors duration-200"
               >
                 <FaSearch />
               </button>
@@ -101,7 +119,7 @@ export default function Navbar() {
           <>
             <button
               onClick={handleLogout}
-              className="flex items-center text-gray-600 hover:text-blue-500"
+              className="flex items-center text-gray-600 hover:text-blue-500 transition-colors duration-200"
             >
               <FaSignOutAlt className="mr-1" />
               <span className="hidden md:inline">Logout</span>
@@ -109,7 +127,7 @@ export default function Navbar() {
             {isProfilePage ? (
               <Link
                 to="/"
-                className="flex items-center text-gray-600 hover:text-blue-500"
+                className="flex items-center text-gray-600 hover:text-blue-500 transition-colors duration-200"
               >
                 <FaHome className="text-2xl" />
                 <span className="hidden md:inline ml-1">Home</span>
@@ -117,7 +135,7 @@ export default function Navbar() {
             ) : (
               <Link
                 to="/profile"
-                className="flex items-center text-gray-600 hover:text-blue-500"
+                className="flex items-center text-gray-600 hover:text-blue-500 transition-colors duration-200"
               >
                 {currentUser.photoURL ? (
                   <img
@@ -135,7 +153,7 @@ export default function Navbar() {
         ) : (
           <Link
             to="/login"
-            className="flex items-center text-gray-600 hover:text-blue-500"
+            className="flex items-center text-gray-600 hover:text-blue-500 transition-colors duration-200"
           >
             <FaSignInAlt className="mr-1" />
             <span>Login / Sign Up</span>
