@@ -153,9 +153,9 @@ export default function Navbar() {
 
             {/* Below Feature Doesn't work - bug needs to be fixed */}
             {/* Theme Toggle */}
-            {/*<div className="ml-2">*/}
-            {/*  <ThemeToggle />*/}
-            {/*</div>*/}
+            <div className="ml-2">
+              <ThemeToggle />
+            </div>
           </>
         ) : (
           <>
@@ -169,9 +169,9 @@ export default function Navbar() {
 
             {/* Below Feature Doesn't work - bug needs to be fixed */}
             {/* Theme Toggle */}
-            {/*<div className="ml-2">*/}
-            {/*  <ThemeToggle />*/}
-            {/*</div>*/}
+            <div className="ml-2">
+              <ThemeToggle />
+            </div>
           </>
         )}
       </div>
