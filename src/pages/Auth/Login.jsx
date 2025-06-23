@@ -70,11 +70,11 @@ export default function Login() {
 
   return (
     <Layout>
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 mt-10">
-        <h2 className="text-2xl font-bold text-center mb-6">Log in to Quickie Notes</h2>
+      <div className="max-w-md mx-auto bg-white dark:bg-[#181818] rounded-lg shadow-md p-6 mt-10 transition-colors duration-300">
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100">Log in to Quickie Notes</h2>
 
         {error && (
-          <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 flex items-center">
+          <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-3 rounded-md mb-4 flex items-center">
             <FaExclamationCircle className="mr-2" />
             <span>{error}</span>
           </div>
@@ -82,11 +82,11 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 mb-1" htmlFor="email">
+            <label className="block text-gray-700 dark:text-gray-300 mb-1" htmlFor="email">
               Email
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 dark:text-gray-400">
                 <FaEnvelope />
               </div>
               <input
@@ -94,18 +94,19 @@ export default function Login() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500
+                dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100 transition-colors"
                 placeholder="Email address"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-1" htmlFor="password">
+            <label className="block text-gray-700 dark:text-gray-300 mb-1" htmlFor="password">
               Password
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 dark:text-gray-400">
                 <FaLock />
               </div>
               <input
@@ -113,7 +114,8 @@ export default function Login() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500
+                dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100 transition-colors"
                 placeholder="Password"
               />
             </div>
@@ -121,7 +123,8 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-yellow-500 text-white py-2 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:bg-yellow-300"
+            className="w-full bg-yellow-500 text-white py-2 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:bg-yellow-300
+            dark:disabled:bg-yellow-800 transition-colors"
             disabled={loading}
           >
             {loading ? 'Logging in...' : 'Log in'}
@@ -129,15 +132,16 @@ export default function Login() {
         </form>
 
         <div className="my-4 flex items-center">
-          <hr className="flex-grow border-gray-300" />
-          <span className="px-3 text-gray-500 text-sm">OR</span>
-          <hr className="flex-grow border-gray-300" />
+          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
+          <span className="px-3 text-gray-500 dark:text-gray-400 text-sm">OR</span>
+          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
         </div>
 
         <div className="space-y-3">
           <button
             onClick={handleGoogleLogin}
-            className="w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-50 flex items-center justify-center"
+            className="w-full bg-white dark:bg-[#393B41] border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 rounded-md
+            hover:bg-gray-50 dark:hover:bg-gray-600 flex items-center justify-center transition-colors"
             disabled={loading}
           >
             <FaGoogle className="text-red-500 mr-2" />
@@ -146,7 +150,8 @@ export default function Login() {
 
           <button
             onClick={handleGithubLogin}
-            className="w-full bg-[#181818] text-white py-2 px-4 rounded-md hover:bg-gray-900 flex items-center justify-center"
+            className="w-full bg-[#181818] dark:bg-[#393B41] text-white py-2 px-4 rounded-md hover:bg-gray-900 dark:hover:bg-gray-600
+            flex items-center justify-center transition-colors"
             disabled={loading}
           >
             <FaGithub className="mr-2" />
@@ -154,9 +159,9 @@ export default function Login() {
           </button>
         </div>
 
-        <p className="mt-6 text-center text-gray-600">
+        <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
           Don't have an account?{' '}
-          <Link to="/register" className="text-yellow-500 hover:underline">
+          <Link to="/register" className="text-yellow-500 dark:text-[#9B7D56] hover:underline">
             Sign up
           </Link>
         </p>
