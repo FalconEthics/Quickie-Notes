@@ -20,6 +20,7 @@ const Home = lazy(() => import('./pages/Home'))
 const Login = lazy(() => import('./pages/Auth/Login'))
 const Register = lazy(() => import('./pages/Auth/Register'))
 const Profile = lazy(() => import('./pages/Profile'))
+const About = lazy(() => import('./pages/About'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 // Error Boundary Component
@@ -68,6 +69,7 @@ function AnimatedRoutes() {
         <Route path="/login" element={<Login />} errorElement={<ErrorBoundary />} />
         <Route path="/register" element={<Register />} errorElement={<ErrorBoundary />} />
         <Route path="/profile" element={<Profile />} errorElement={<ErrorBoundary />} />
+        <Route path="/about" element={<About />} errorElement={<ErrorBoundary />} />
         <Route path="/404" element={<NotFound />} errorElement={<ErrorBoundary />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaUserCircle, FaEnvelope, FaCalendar, FaCheck, FaExclamationCircle } from 'react-icons/fa';
+import { useNavigate, Link } from 'react-router-dom';
+import { FaUserCircle, FaEnvelope, FaCalendar, FaCheck, FaExclamationCircle, FaInfoCircle } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/layout/Layout';
 
@@ -179,6 +179,17 @@ export default function Profile() {
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* About App Section */}
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">
+              <Link
+                to="/about"
+                className="flex items-center justify-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-[#393B41] transition-colors group"
+              >
+                <FaInfoCircle className="text-yellow-500 dark:text-[#9B7D56] mr-3 text-lg group-hover:scale-110 transition-transform" />
+                <span className="text-gray-700 dark:text-gray-300 font-medium">About This App</span>
+              </Link>
             </div>
           </div>
         </div>
