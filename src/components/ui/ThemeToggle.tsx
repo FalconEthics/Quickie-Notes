@@ -1,23 +1,24 @@
-import { FaMoon, FaSun } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import { useTheme, THEMES } from '../../context/ThemeContext';
+import { FaMoon, FaSun } from 'react-icons/fa'
+import { motion } from 'framer-motion'
+import { useTheme } from '@context/ThemeContext'
+import { Theme } from '../../types'
 
 export default function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme()
 
   // Determine which icon to show based on current theme
   const getIcon = () => {
-    return theme === THEMES.DARK
+    return theme === Theme.DARK
       ? <FaMoon className="text-xl" />
-      : <FaSun className="text-xl text-yellow-500" />;
-  };
+      : <FaSun className="text-xl text-yellow-500" />
+  }
 
   // Get tooltip text based on current theme
   const getTooltipText = () => {
-    return theme === THEMES.DARK
+    return theme === Theme.DARK
       ? 'Dark Mode (Click for Light Mode)'
-      : 'Light Mode (Click for Dark Mode)';
-  };
+      : 'Light Mode (Click for Dark Mode)'
+  }
 
   return (
     <div className="relative group">
@@ -38,5 +39,5 @@ export default function ThemeToggle() {
         </span>
       </div>
     </div>
-  );
+  )
 }

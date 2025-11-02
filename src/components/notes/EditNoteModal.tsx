@@ -1,61 +1,62 @@
-import { useState, useEffect } from 'react';
-import { useNotes } from '../../context/NotesContext';
-import { motion } from 'framer-motion';
-import Modal from '../ui/Modal';
+import { useState, useEffect, ChangeEvent } from 'react'
+import { useNotes } from '@context/NotesContext'
+import { motion } from 'framer-motion'
+import Modal from '@components/ui/Modal'
+import type { EditNoteModalProps } from '../../types'
 
-export default function EditNoteModal({ isOpen, onClose, note }) {
-  const [content, setContent] = useState('');
-  const [isConfirmDiscardOpen, setIsConfirmDiscardOpen] = useState(false);
-  const [hasChanges, setHasChanges] = useState(false);
-  const { updateNote } = useNotes();
+export default function EditNoteModal({ isOpen, onClose, note }: EditNoteModalProps) {
+  const [content, setContent] = useState('')
+  const [isConfirmDiscardOpen, setIsConfirmDiscardOpen] = useState(false)
+  const [hasChanges, setHasChanges] = useState(false)
+  const { updateNote } = useNotes()
 
   // Initialize form when note changes
   useEffect(() => {
     if (note) {
-      setContent(note.content || '');
-      setHasChanges(false);
+      setContent(note.content || '')
+      setHasChanges(false)
     }
-  }, [note, isOpen]);
+  }, [note, isOpen])
 
   // Check if content changed compared to original
-  const checkChanges = (newContent) => {
-    setHasChanges(newContent !== (note?.content || ''));
-  };
+  const checkChanges = (newContent: string) => {
+    setHasChanges(newContent !== (note?.content || ''))
+  }
 
   // Handle content change
-  const handleContentChange = (e) => {
-    const newContent = e.target.value;
-    setContent(newContent);
-    checkChanges(newContent);
-  };
+  const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const newContent = e.target.value
+    setContent(newContent)
+    checkChanges(newContent)
+  }
 
   // Handle save
   const handleSave = () => {
     updateNote(note.id, {
       content,
-    });
-    onClose();
-  };
+    })
+    onClose()
+  }
 
   // Handle discard attempt
   const handleDiscardAttempt = () => {
     if (hasChanges) {
-      setIsConfirmDiscardOpen(true);
+      setIsConfirmDiscardOpen(true)
     } else {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   // Confirm discard and close
   const confirmDiscard = () => {
-    setIsConfirmDiscardOpen(false);
-    onClose();
-  };
+    setIsConfirmDiscardOpen(false)
+    onClose()
+  }
 
   // Handle close for confirm dialog
   const handleConfirmClose = () => {
-    setIsConfirmDiscardOpen(false);
-  };
+    setIsConfirmDiscardOpen(false)
+  }
 
   // Modal footer buttons
   const modalFooter = (
@@ -80,7 +81,7 @@ export default function EditNoteModal({ isOpen, onClose, note }) {
         Save
       </motion.button>
     </>
-  );
+  )
 
   // Confirm dialog footer
   const confirmFooter = (
@@ -100,7 +101,7 @@ export default function EditNoteModal({ isOpen, onClose, note }) {
         Discard
       </motion.button>
     </>
-  );
+  )
 
   return (
     <>
@@ -129,7 +130,7 @@ export default function EditNoteModal({ isOpen, onClose, note }) {
           <textarea
             value={content}
             onChange={handleContentChange}
-            rows="6"
+            rows={6}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
           />
         </div>
@@ -148,5 +149,5 @@ export default function EditNoteModal({ isOpen, onClose, note }) {
         </p>
       </Modal>
     </>
-  );
+  )
 }

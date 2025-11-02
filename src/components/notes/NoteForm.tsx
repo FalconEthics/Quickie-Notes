@@ -1,45 +1,45 @@
-import { useState } from 'react';
-import { useNotes } from '../../context/NotesContext';
-import { FaPlus, FaTimes } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, FormEvent, ChangeEvent } from 'react'
+import { useNotes } from '@context/NotesContext'
+import { FaPlus, FaTimes } from 'react-icons/fa'
+import { motion, AnimatePresence, Variants } from 'framer-motion'
 
 export default function NoteForm() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const { addNote } = useNotes();
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const { addNote } = useNotes()
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
 
-    if (!title.trim()) return;
+    if (!title.trim()) return
 
     addNote({
       title,
       content,
-    });
+    })
 
     // Reset form
-    setTitle('');
-    setContent('');
-    setIsExpanded(false);
-  };
+    setTitle('')
+    setContent('')
+    setIsExpanded(false)
+  }
 
   // Toggle form expansion
   const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
+    setIsExpanded(!isExpanded)
+  }
 
   // Close form without saving
   const handleClose = () => {
-    setTitle('');
-    setContent('');
-    setIsExpanded(false);
-  };
+    setTitle('')
+    setContent('')
+    setIsExpanded(false)
+  }
 
   // Animation variants for form expansion
-  const formVariants = {
+  const formVariants: Variants = {
     collapsed: {
       height: "auto",
       opacity: 1,
@@ -60,7 +60,7 @@ export default function NoteForm() {
         ease: "easeOut"
       }
     }
-  };
+  }
 
   return (
     <div className="bg-white dark:bg-[#181818] rounded-lg shadow-md overflow-hidden mb-8 transition-colors duration-300">
@@ -104,7 +104,7 @@ export default function NoteForm() {
                 type="text"
                 placeholder="Title"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                 autoFocus
               />
@@ -114,8 +114,8 @@ export default function NoteForm() {
               <textarea
                 placeholder="Note content..."
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
-                rows="4"
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
+                rows={4}
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 resize-none dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
               />
             </div>
@@ -132,5 +132,5 @@ export default function NoteForm() {
         )}
       </AnimatePresence>
     </div>
-  );
+  )
 }

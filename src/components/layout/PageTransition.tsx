@@ -1,11 +1,12 @@
-import { useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom'
+import { motion, Variants } from 'framer-motion'
+import type { PageTransitionProps } from '../../types'
 
-export default function PageTransition({ children }) {
-  const location = useLocation();
+export default function PageTransition({ children }: PageTransitionProps) {
+  const location = useLocation()
 
   // Page transition variants
-  const pageVariants = {
+  const pageVariants: Variants = {
     initial: {
       opacity: 0,
       x: 10
@@ -26,7 +27,7 @@ export default function PageTransition({ children }) {
         ease: "easeInOut"
       }
     }
-  };
+  }
 
   return (
     <motion.div
@@ -38,5 +39,5 @@ export default function PageTransition({ children }) {
     >
       {children}
     </motion.div>
-  );
+  )
 }

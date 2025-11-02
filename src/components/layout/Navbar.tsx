@@ -1,71 +1,70 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaSearch, FaSignInAlt, FaUserCircle, FaSignOutAlt, FaHome } from 'react-icons/fa';
-import { useAuth } from '../../context/AuthContext';
-import { useNotes } from '../../context/NotesContext';
-import ThemeToggle from '../ui/ThemeToggle';
+import { useState, useEffect, useCallback, useRef, ChangeEvent } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { FaSearch, FaSignInAlt, FaUserCircle, FaSignOutAlt, FaHome } from 'react-icons/fa'
+import { useAuth } from '@context/AuthContext'
+import { useNotes } from '@context/NotesContext'
 
 export default function Navbar() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState('');
-  const [isSearchAnimating, setIsSearchAnimating] = useState(false);
-  const { currentUser, logout } = useAuth();
-  const { handleSearch, clearNotes } = useNotes();
-  const navigate = useNavigate();
-  const location = useLocation(); // Get current location
-  const searchRef = useRef(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchInput, setSearchInput] = useState('')
+  const [isSearchAnimating, setIsSearchAnimating] = useState(false)
+  const { currentUser, logout } = useAuth()
+  const { handleSearch, clearNotes } = useNotes()
+  const navigate = useNavigate()
+  const location = useLocation() // Get current location
+  const searchRef = useRef<HTMLDivElement>(null)
 
   // Check if currently on profile page
-  const isProfilePage = location.pathname === '/profile';
+  const isProfilePage = location.pathname === '/profile'
 
   // Handle search animation timing
   useEffect(() => {
     if (isSearchOpen) {
-      setIsSearchAnimating(true);
+      setIsSearchAnimating(true)
     } else if (!isSearchOpen && isSearchAnimating) {
       const timer = setTimeout(() => {
-        setIsSearchAnimating(false);
-      }, 300); // Match this with the animation duration
-      return () => clearTimeout(timer);
+        setIsSearchAnimating(false)
+      }, 300) // Match this with the animation duration
+      return () => clearTimeout(timer)
     }
-  }, [isSearchOpen]);
+  }, [isSearchOpen, isSearchAnimating])
 
   // Create a stable search handler that doesn't depend on handleSearch
-  const searchHandler = useCallback((term) => {
-    setSearchInput(term);
-    handleSearch(term);
-  }, [handleSearch]);
+  const searchHandler = useCallback((term: string) => {
+    setSearchInput(term)
+    handleSearch(term)
+  }, [handleSearch])
 
   // Reset search when component unmounts, using a ref to avoid dependency issues
   useEffect(() => {
     // No cleanup function to prevent calling handleSearch on unmount
     // This avoids the infinite loop
-  }, []);
+  }, [])
 
   // Handle search input changes
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    searchHandler(value);
-  };
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    searchHandler(value)
+  }
 
   // Toggle search input visibility
   const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
+    setIsSearchOpen(!isSearchOpen)
     if (isSearchOpen) {
-      searchHandler('');
+      searchHandler('')
     }
-  };
+  }
 
   // Handle user logout
   const handleLogout = async () => {
     try {
-      await logout();
-      clearNotes();
-      navigate('/');
+      await logout()
+      clearNotes()
+      navigate('/')
     } catch (error) {
-      console.error('Failed to log out', error);
+      console.error('Failed to log out', error)
     }
-  };
+  }
 
   return (
     <nav className="bg-white shadow-md py-4 px-6 flex items-center justify-between transition-colors duration-300 dark:bg-[#181818] dark:shadow-black">
@@ -176,5 +175,5 @@ export default function Navbar() {
         )}
       </div>
     </nav>
-  );
+  )
 }

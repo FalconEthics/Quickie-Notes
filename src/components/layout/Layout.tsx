@@ -1,21 +1,22 @@
-import Navbar from './Navbar';
-import Footer from './Footer';
-import PageTransition from './PageTransition';
-import { useTheme } from '../../context/ThemeContext';
-import { useEffect, useState } from 'react';
+import Navbar from './Navbar'
+import Footer from './Footer'
+import PageTransition from './PageTransition'
+import { useTheme } from '@context/ThemeContext'
+import { useEffect, useState } from 'react'
+import type { LayoutProps } from '../../types'
 
-export default function Layout({ children }) {
-  const { isDarkMode } = useTheme();
-  const [bgImage, setBgImage] = useState(null);
+export default function Layout({ children }: LayoutProps) {
+  const { isDarkMode } = useTheme()
+  const [bgImage, setBgImage] = useState<string | null>(null)
 
   // Set the background image based on the system theme or user preference
   useEffect(() => {
     // Use the browser's preferred theme for background image
-    setBgImage(isDarkMode ? '/darkBG.png' : '/lightBG.png');
-  }, [isDarkMode]);
+    setBgImage(isDarkMode ? '/darkBG.png' : '/lightBG.png')
+  }, [isDarkMode])
 
   // Show nothing until we determine the background to avoid flicker
-  if (bgImage === null) return null;
+  if (bgImage === null) return null
 
   return (
     <div
@@ -28,5 +29,5 @@ export default function Layout({ children }) {
       </main>
       <Footer />
     </div>
-  );
+  )
 }

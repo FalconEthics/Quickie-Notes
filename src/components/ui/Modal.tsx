@@ -1,18 +1,9 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion'
+import type { ModalProps } from '../../types'
+import { MouseEvent } from 'react'
 
 /**
  * Reusable Modal Component with animations
- *
- * @param {Object} props
- * @param {boolean} props.isOpen - Whether the modal is open
- * @param {Function} props.onClose - Function to call when modal should close
- * @param {React.ReactNode} props.children - Modal content
- * @param {string} props.title - Modal title
- * @param {React.ReactNode} props.titleIcon - Icon to show next to title
- * @param {string} props.titleClassName - Additional class name for the title
- * @param {boolean} props.preventCloseOnBackdrop - Whether to prevent closing on backdrop click
- * @param {React.ReactNode} props.footer - Footer content (buttons, etc.)
- * @param {string} props.size - Modal size ('sm', 'md', 'lg', 'xl')
  */
 export default function Modal({
   isOpen,
@@ -24,18 +15,18 @@ export default function Modal({
   preventCloseOnBackdrop = false,
   footer,
   size = 'md',
-}) {
+}: ModalProps) {
   // Size classes mapping
-  const sizeClasses = {
+  const sizeClasses: Record<NonNullable<ModalProps['size']>, string> = {
     sm: 'max-w-sm',
     md: 'max-w-md',
     lg: 'max-w-lg',
     xl: 'max-w-xl',
     full: 'max-w-full mx-4',
-  };
+  }
 
   // Animation variants
-  const overlayVariants = {
+  const overlayVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -45,9 +36,9 @@ export default function Modal({
       opacity: 0,
       transition: { duration: 0.2, delay: 0.1 }
     }
-  };
+  }
 
-  const modalVariants = {
+  const modalVariants: Variants = {
     hidden: {
       opacity: 0,
       y: 20,
@@ -69,13 +60,17 @@ export default function Modal({
       scale: 0.95,
       transition: { duration: 0.2 }
     }
-  };
+  }
 
   const handleBackdropClick = () => {
     if (!preventCloseOnBackdrop) {
-      onClose();
+      onClose()
     }
-  };
+  }
+
+  const handleModalClick = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+  }
 
   return (
     <AnimatePresence>
@@ -97,7 +92,7 @@ export default function Modal({
             initial="hidden"
             animate="visible"
             exit="exit"
-            onClick={(e) => e.stopPropagation()}
+            onClick={handleModalClick}
           >
             {/* Modal Header */}
             {title && (
@@ -133,5 +128,5 @@ export default function Modal({
         </div>
       )}
     </AnimatePresence>
-  );
+  )
 }

@@ -1,5 +1,5 @@
 import { FaLinkedin, FaInstagram, FaGlobe, FaEnvelope, FaGithub, FaExclamationTriangle } from 'react-icons/fa';
-import Layout from '../components/layout/Layout';
+import Layout from '@components/layout/Layout';
 
 export default function About() {
   return (
@@ -23,7 +23,7 @@ export default function About() {
                     Project Application Notice
                   </h3>
                   <p className="text-amber-700 dark:text-amber-300 text-sm leading-relaxed">
-                    This is a project application, not a production app. It's designed for demonstration and learning purposes. 
+                    This is a project application, not a production app. It's designed for demonstration and learning purposes.
                     Please do not share any personal or sensitive information while using this application.
                   </p>
                 </div>
@@ -36,11 +36,11 @@ export default function About() {
                 About This Project
               </h2>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-                Quickie Notes is a modern note-taking application built with React 19 and Firebase. 
+                Quickie Notes is a modern note-taking application built with React 19 and Firebase.
                 This project showcases modern web development practices and the latest React features.
               </p>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                Originally created as a bootcamp project in 2022, it has been completely rewritten using 
+                Originally created as a bootcamp project in 2022, it has been completely rewritten using
                 cutting-edge technologies including React 19, Firebase SDK 11, Vite, and TailwindCSS.
               </p>
             </div>
@@ -53,7 +53,7 @@ export default function About() {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Created by <span className="font-medium text-gray-800 dark:text-gray-200">Soumik Das</span>
               </p>
-              
+
               {/* Social Links */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <a

@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
-import Layout from '../components/layout/Layout';
-import NoteForm from '../components/notes/NoteForm';
-import NoteItem from '../components/notes/NoteItem';
-import { useNotes } from '../context/NotesContext';
-import { useAuth } from '../context/AuthContext';
+import Layout from '@components/layout/Layout'
+import NoteForm from '@components/notes/NoteForm'
+import NoteItem from '@components/notes/NoteItem'
+import { useNotes } from '@context/NotesContext'
+import { useAuth } from '@context/AuthContext'
 
 export default function Home() {
-  const { filteredNotes, loading } = useNotes();
-  const { currentUser } = useAuth();
+  const { filteredNotes, loading } = useNotes()
+  const { currentUser } = useAuth()
 
   return (
     <Layout>
@@ -40,9 +39,7 @@ export default function Home() {
               <div className="text-center py-12 shadow-md bg-gray-50 dark:bg-[#181818] rounded-lg">
                 <h3 className="text-xl font-medium text-gray-600 dark:text-gray-300 mb-2">No notes found</h3>
                 <p className="text-gray-500 dark:text-gray-400">
-                  {currentUser?.searchTerm
-                    ? 'Try a different search term.'
-                    : 'Click "Add a new note..." to create your first note.'}
+                  Click "Add a new note..." to create your first note.
                 </p>
               </div>
             ) : (
@@ -56,5 +53,5 @@ export default function Home() {
         )}
       </div>
     </Layout>
-  );
+  )
 }

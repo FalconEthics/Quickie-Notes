@@ -1,7 +1,4 @@
-import React from 'react';
-
 export default function Footer() {
-
   return (
     <footer className="bg-gray-100 dark:bg-[#181818] py-4 px-6 mt-auto transition-colors duration-300">
       <div className="container mx-auto text-center">
@@ -15,5 +12,5 @@ export default function Footer() {
         </a>
       </div>
     </footer>
-  );
+  )
 }

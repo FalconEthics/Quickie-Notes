@@ -1,26 +1,17 @@
-import { useState } from 'react';
-import { FaTrash, FaEdit } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import { useNotes } from '../../context/NotesContext';
-import EditNoteModal from './EditNoteModal';
-import DeleteNoteModal from './DeleteNoteModal';
+import { useState } from 'react'
+import { FaTrash, FaEdit } from 'react-icons/fa'
+import { motion, Variants } from 'framer-motion'
+import EditNoteModal from './EditNoteModal'
+import DeleteNoteModal from './DeleteNoteModal'
+import type { NoteItemProps } from '../../types'
+import { formatDate } from '@utils/index'
 
-export default function NoteItem({ note }) {
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  // Format date to be more readable
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
+export default function NoteItem({ note }: NoteItemProps) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   // Animation variants for note item
-  const noteVariants = {
+  const noteVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -38,7 +29,7 @@ export default function NoteItem({ note }) {
         ease: "easeIn"
       }
     }
-  };
+  }
 
   return (
     <motion.div
@@ -95,5 +86,5 @@ export default function NoteItem({ note }) {
         title={note.title}
       />
     </motion.div>
-  );
+  )
 }

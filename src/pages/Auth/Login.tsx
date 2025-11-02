@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaGithub, FaEnvelope, FaLock, FaExclamationCircle } from 'react-icons/fa';
-import { useAuth } from '../../context/AuthContext';
-import Layout from '../../components/layout/Layout';
+import { useAuth } from '@context/AuthContext';
+import Layout from '@components/layout/Layout';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const { login, loginWithGoogle, loginWithGithub } = useAuth();
   const navigate = useNavigate();
 
   // Handle email/password login
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -26,7 +26,7 @@ export default function Login() {
       setLoading(true);
       await login(email, password);
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error('Login error:', err);
       setError(
         err.code === 'auth/invalid-credential'
@@ -39,13 +39,13 @@ export default function Login() {
   };
 
   // Handle Google login
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = async (): Promise<void> => {
     try {
       setError('');
       setLoading(true);
       await loginWithGoogle();
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error('Google login error:', err);
       setError('Failed to sign in with Google. Please try again.');
     } finally {
@@ -54,13 +54,13 @@ export default function Login() {
   };
 
   // Handle GitHub login
-  const handleGithubLogin = async () => {
+  const handleGithubLogin = async (): Promise<void> => {
     try {
       setError('');
       setLoading(true);
       await loginWithGithub();
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error('GitHub login error:', err);
       setError('Failed to sign in with GitHub. Please try again.');
     } finally {
@@ -93,7 +93,7 @@ export default function Login() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500
                 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100 transition-colors"
                 placeholder="Email address"
@@ -113,7 +113,7 @@ export default function Login() {
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500
                 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100 transition-colors"
                 placeholder="Password"

@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaUserCircle, FaEnvelope, FaCalendar, FaCheck, FaExclamationCircle, FaInfoCircle } from 'react-icons/fa';
-import { useAuth } from '../context/AuthContext';
-import Layout from '../components/layout/Layout';
+import { useAuth } from '@context/AuthContext';
+import Layout from '@components/layout/Layout';
 
 export default function Profile() {
   const { currentUser, updateUserProfile, loading: authLoading } = useAuth();
-  const [displayName, setDisplayName] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [displayName, setDisplayName] = useState<string>('');
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   // Redirect if not logged in
@@ -23,7 +23,7 @@ export default function Profile() {
   }, [currentUser, authLoading, navigate]);
 
   // Format date
-  const formatDate = (timestamp) => {
+  const formatDate = (timestamp: string | undefined): string => {
     if (!timestamp) return 'N/A';
 
     const date = new Date(timestamp);
@@ -35,7 +35,7 @@ export default function Profile() {
   };
 
   // Handle name update
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     if (displayName.trim() === currentUser?.displayName) {
@@ -52,7 +52,7 @@ export default function Profile() {
       setSuccess('Name updated successfully!');
       setTimeout(() => setSuccess(''), 3000);
       setIsEditing(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating profile:', error);
       setError('Failed to update profile');
     } finally {
@@ -61,7 +61,7 @@ export default function Profile() {
   };
 
   // Cancel editing
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     setDisplayName(currentUser?.displayName || '');
     setIsEditing(false);
     setError('');
@@ -128,7 +128,7 @@ export default function Profile() {
                       <input
                         type="text"
                         value={displayName}
-                        onChange={(e) => setDisplayName(e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value)}
                         className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
                         autoFocus
                       />

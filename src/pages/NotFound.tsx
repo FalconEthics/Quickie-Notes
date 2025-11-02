@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { FaExclamationTriangle, FaHome } from 'react-icons/fa';
-import Layout from '../components/layout/Layout';
+import { Link } from 'react-router-dom'
+import { FaExclamationTriangle, FaHome } from 'react-icons/fa'
+import Layout from '@components/layout/Layout'
 
 export default function NotFound() {
   return (
@@ -24,5 +24,5 @@ export default function NotFound() {
         </Link>
       </div>
     </Layout>
-  );
+  )
 }

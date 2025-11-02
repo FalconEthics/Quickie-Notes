@@ -1,21 +1,21 @@
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaLock, FaExclamationCircle, FaGoogle, FaGithub } from 'react-icons/fa';
-import { useAuth } from '../../context/AuthContext';
-import Layout from '../../components/layout/Layout';
+import { useAuth } from '@context/AuthContext';
+import Layout from '@components/layout/Layout';
 
 export default function Register() {
-  const [displayName, setDisplayName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [displayName, setDisplayName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const { register, loginWithGoogle, loginWithGithub } = useAuth();
   const navigate = useNavigate();
 
   // Handle email/password registration
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     // Validation
@@ -39,7 +39,7 @@ export default function Register() {
       setLoading(true);
       await register(email, password, displayName);
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error('Registration error:', err);
 
       if (err.code === 'auth/email-already-in-use') {
@@ -53,13 +53,13 @@ export default function Register() {
   };
 
   // Handle Google login/registration
-  const handleGoogleSignUp = async () => {
+  const handleGoogleSignUp = async (): Promise<void> => {
     try {
       setError('');
       setLoading(true);
       await loginWithGoogle();
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error('Google sign up error:', err);
       setError('Failed to sign up with Google. Please try again.');
     } finally {
@@ -68,13 +68,13 @@ export default function Register() {
   };
 
   // Handle GitHub login/registration
-  const handleGithubSignUp = async () => {
+  const handleGithubSignUp = async (): Promise<void> => {
     try {
       setError('');
       setLoading(true);
       await loginWithGithub();
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error('GitHub sign up error:', err);
       setError('Failed to sign up with GitHub. Please try again.');
     } finally {
@@ -108,7 +108,7 @@ export default function Register() {
                 id="displayName"
                 type="text"
                 value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value)}
                 className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
                 placeholder="Your name"
               />
@@ -128,7 +128,7 @@ export default function Register() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
                 placeholder="Email address"
               />
@@ -148,7 +148,7 @@ export default function Register() {
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
                 placeholder="Password (min 6 characters)"
               />
@@ -168,7 +168,7 @@ export default function Register() {
                 id="confirmPassword"
                 type="password"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
                 className="pl-10 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-[#393B41] dark:border-gray-600 dark:text-gray-100"
                 placeholder="Confirm password"
               />

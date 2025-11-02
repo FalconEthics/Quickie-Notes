@@ -1,16 +1,17 @@
-import { useNotes } from '../../context/NotesContext';
-import { FaTrash } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import Modal from '../ui/Modal';
+import { useNotes } from '@context/NotesContext'
+import { FaTrash } from 'react-icons/fa'
+import { motion } from 'framer-motion'
+import Modal from '@components/ui/Modal'
+import type { DeleteNoteModalProps } from '../../types'
 
-export default function DeleteNoteModal({ isOpen, onClose, noteId, title }) {
-  const { deleteNote } = useNotes();
+export default function DeleteNoteModal({ isOpen, onClose, noteId, title }: DeleteNoteModalProps) {
+  const { deleteNote } = useNotes()
 
   // Handle deletion confirmation
   const handleDelete = () => {
-    deleteNote(noteId);
-    onClose();
-  };
+    deleteNote(noteId)
+    onClose()
+  }
 
   // Modal footer buttons
   const modalFooter = (
@@ -30,7 +31,7 @@ export default function DeleteNoteModal({ isOpen, onClose, noteId, title }) {
         <FaTrash className="mr-1" /> Delete
       </motion.button>
     </>
-  );
+  )
 
   return (
     <Modal
@@ -49,5 +50,5 @@ export default function DeleteNoteModal({ isOpen, onClose, noteId, title }) {
         This action cannot be undone.
       </p>
     </Modal>
-  );
+  )
 }

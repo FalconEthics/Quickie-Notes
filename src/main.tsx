@@ -6,26 +6,43 @@ import {
   Route,
   Navigate,
   useRouteError,
-  isRouteErrorResponse,
   useLocation
 } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import './index.css'
-import { AuthProvider } from './context/AuthContext'
-import { NotesProvider } from './context/NotesContext'
-import { ThemeProvider } from './context/ThemeContext'
+import { AuthProvider } from '@context/AuthContext'
+import { NotesProvider } from '@context/NotesContext'
+import { ThemeProvider } from '@context/ThemeContext'
 
 // Lazy-loaded components
-const Home = lazy(() => import('./pages/Home'))
-const Login = lazy(() => import('./pages/Auth/Login'))
-const Register = lazy(() => import('./pages/Auth/Register'))
-const Profile = lazy(() => import('./pages/Profile'))
-const About = lazy(() => import('./pages/About'))
-const NotFound = lazy(() => import('./pages/NotFound'))
+const Home = lazy(() => import('@pages/Home'))
+const Login = lazy(() => import('@pages/Auth/Login'))
+const Register = lazy(() => import('@pages/Auth/Register'))
+const Profile = lazy(() => import('@pages/Profile'))
+const About = lazy(() => import('@pages/About'))
+const NotFound = lazy(() => import('@pages/NotFound'))
+
+// Type guard for route error responses
+interface RouteErrorResponse {
+  status: number
+  statusText: string
+  data?: {
+    message?: string
+  }
+}
+
+function isRouteErrorResponse(error: unknown): error is RouteErrorResponse {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'status' in error &&
+    'statusText' in error
+  )
+}
 
 // Error Boundary Component
 function ErrorBoundary() {
-  const error = useRouteError();
+  const error = useRouteError()
 
   if (isRouteErrorResponse(error)) {
     return (
@@ -36,17 +53,19 @@ function ErrorBoundary() {
         <p className="text-gray-700 dark:text-gray-300 mb-4">{error.data?.message || "Something went wrong!"}</p>
         <a href="/" className="text-blue-500 dark:text-blue-400 underline">Go back home</a>
       </div>
-    );
+    )
   }
+
+  const errorMessage = error instanceof Error ? error.message : "Unknown error"
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-red-50 dark:bg-red-900/20">
       <h1 className="text-3xl font-bold text-red-600 dark:text-red-400 mb-4">Oops!</h1>
       <p className="text-gray-700 dark:text-gray-300 mb-4">Sorry, an unexpected error has occurred.</p>
-      <p className="text-gray-500 dark:text-gray-400 mb-4">{error.message || "Unknown error"}</p>
+      <p className="text-gray-500 dark:text-gray-400 mb-4">{errorMessage}</p>
       <a href="/" className="text-blue-500 dark:text-blue-400 underline">Go back home</a>
     </div>
-  );
+  )
 }
 
 // Loading Spinner Component
@@ -55,12 +74,12 @@ function LoadingSpinner() {
     <div className="flex items-center justify-center h-screen">
       <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 dark:border-blue-400"></div>
     </div>
-  );
+  )
 }
 
 // Routes with AnimatePresence
 function AnimatedRoutes() {
-  const location = useLocation();
+  const location = useLocation()
 
   return (
     <AnimatePresence mode="wait">
@@ -74,7 +93,7 @@ function AnimatedRoutes() {
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
     </AnimatePresence>
-  );
+  )
 }
 
 // App Component with Routes
@@ -93,7 +112,10 @@ function App() {
         </BrowserRouter>
       </ThemeProvider>
     </StrictMode>
-  );
+  )
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+const rootElement = document.getElementById('root')
+if (!rootElement) throw new Error('Root element not found')
+
+createRoot(rootElement).render(<App />)
