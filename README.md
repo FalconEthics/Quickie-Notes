@@ -16,7 +16,7 @@
 <h3 align="center">Quickie Notes</h3>
 
   <p align="center">
-    A modern, lightweight note-taking app built with React 19 and Firebase
+    A modern, lightweight note-taking app built with React 19, TypeScript, and Firebase
     <br />
     <a href="https://github.com/FalconEthics/quickie-notes"><strong>Explore the docs »</strong></a>
     <br />
@@ -49,10 +49,11 @@ This app has an interesting history! It was originally my final project when I w
 
 The original version was built with React 16, Firebase, webpack, Node.js, and Bootstrap. This new version represents a complete overhaul using the latest web technologies:
 - React 19 with the new React Compiler
+- TypeScript 5.9+ with strict mode
 - Firebase SDK 11
 - Vite + SWC build tooling
 - Bun as the JavaScript runtime
-- TailwindCSS for styling
+- TailwindCSS 4 for styling
 
 This rewrite process has been illuminating, showing how dramatically front-end development has evolved in just a few years and how much more productive these modern tools can make developers.
 
@@ -70,11 +71,12 @@ The rewrite showcases several significant improvements in React and its ecosyste
 
 5. **Build System**: Moving from webpack to Vite has drastically improved development experience with near-instant hot module replacement and faster builds.
 
-6. **TypeScript Support**: While the original project used JavaScript only, this version has improved type safety through TypeScript integration.
+6. **TypeScript Integration**: The entire codebase has been migrated to TypeScript with strict mode enabled, providing comprehensive type safety, better IDE support, and improved code maintainability. Path aliases are configured for cleaner imports throughout the application.
 
 ### Built With
 
 * [![React][React.js]][React-url]
+* [![TypeScript][TypeScript]][TypeScript-url]
 * [![Firebase][Firebase]][Firebase-url]
 * [![Vite][Vite]][Vite-url]
 * [![Tailwind][Tailwind.css]][Tailwind-url]
@@ -166,6 +168,8 @@ Live Demo: [https://quickie-notes.vercel.app](https://quickie-notes.vercel.app)
 [Tailwind-url]: https://tailwindcss.com/
 [Bun]: https://img.shields.io/badge/Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white
 [Bun-url]: https://bun.sh/
+[TypeScript]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
 [linkedin-badge]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://www.linkedin.com/in/soumik-das-profile/
 [portfolio-badge]: https://img.shields.io/badge/Portfolio-255E63?style=for-the-badge&logo=About.me&logoColor=white
